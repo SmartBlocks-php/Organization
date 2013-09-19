@@ -1,6 +1,56 @@
 {
-    "name":"Organization",
-    "token":"organization",
-    "description":"This block contains organization apps.",
-    "color":"#1c7783"
+    "name": "Organization",
+    "token": "organization",
+    "description": "This block contains organization apps.",
+    "color": "#1c7783",
+    "types": [
+        {
+            "model_name": "Task",
+            "collection_name": "Tasks",
+            "plural": "tasks",
+            "ws_origin": "/Organization/Tasks",
+            "model_location": "Organization/Apps/Tasks/Models/Task",
+            "collection_location": "Organization/Apps/Tasks/Collections/Tasks"
+        },
+        {
+            "model_name": "PlannedTask",
+            "collection_name": "PlannedTasks",
+            "plural": "planned_tasks",
+            "ws_origin": "/Organization/PlannedTasks",
+            "model_location": "Organization/Apps/Daily/Models/PlannedTask",
+            "collection_location": "Organization/Apps/Daily/Collections/PlannedTasks"
+        },
+        {
+            "model_name": "Deadline",
+            "collection_name": "Deadlines",
+            "plural": "deadlines",
+            "ws_origin": "/Organization/Deadlines",
+            "model_location": "Organization/Apps/Models/Deadline",
+            "collection_location": "Organization/Apps/Collections/Deadlines"
+        },
+        {
+            "model_name": "Subtask",
+            "collection_name": "Subtasks",
+            "plural": "subtasks",
+            "ws_origin": "/Organization/Subtasks",
+            "model_location": "Organization/Apps/Models/Subtask",
+            "collection_location": "Organization/Apps/Collections/Subtasks"
+        },
+        {
+            "model_name": "Activity",
+            "collection_name": "Activities",
+            "plural": "activities",
+            "ws_origin": "/Organization/Activities",
+            "model_location": "Organization/Apps/Common/Models/Activity",
+            "collection_location": "Organization/Apps/Common/Collections/Activities"
+        },
+        {
+            "model_name": "ActivityType",
+            "collection_name": "ActivityTypes",
+            "plural": "activity_types",
+            "ws_origin": "/Organization/ActivityTypes",
+            "model_location": "Organization/Apps/Common/Models/ActivityType",
+            "collection_location": "Organization/Apps/Common/Collections/ActivityTypes"
+        }
+    ]
 }

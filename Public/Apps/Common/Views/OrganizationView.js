@@ -41,24 +41,24 @@ define([
             window.OrgApp = base;
             base.common = CommonMethods;
 
-            base.tasks = new TasksCollection();
-            base.planned_tasks = new PlannedTasksCollection();
-            base.activities = new ActivitiesCollection();
-            base.activity_types = new ActivityTypesCollection();
+            base.tasks = SmartBlocks.Blocks.Organization.Data.tasks;
+            base.planned_tasks = SmartBlocks.Blocks.Organization.Data.planned_tasks;
+            base.activities = SmartBlocks.Blocks.Organization.Data.activities;
+            base.activity_types = SmartBlocks.Blocks.Organization.Data.activity_types;
             base.events = $.extend({}, Backbone.Events);
 
-            base.Task = Task;
-            base.PlannedTask = PlannedTask;
-            base.PlannedTasksCollection = PlannedTasksCollection;
-            base.TasksCollection = TasksCollection;
-            base.Deadline = Deadline;
-            base.DeadlinesCollection = DeadlinesCollection;
-            base.Subtask = Subtask;
-            base.SubtasksCollection = SubtasksCollection;
-            base.ActivitiesCollection = ActivitiesCollection;
-            base.Activity = Activity;
-            base.ActivityType = ActivityType;
-            base.ActivityTypesCollection = ActivityTypesCollection;
+            base.Task = SmartBlocks.Blocks.Organization.Models.Task;
+            base.PlannedTask = SmartBlocks.Blocks.Organization.Models.PlannedTask;
+            base.PlannedTasksCollection = SmartBlocks.Blocks.Organization.Collections.PlannedTasks;
+            base.TasksCollection = SmartBlocks.Blocks.Organization.Collections.Tasks;
+            base.Deadline = SmartBlocks.Blocks.Organization.Models.Deadline;
+            base.DeadlinesCollection = SmartBlocks.Blocks.Organization.Collections.Deadlines;
+            base.Subtask = SmartBlocks.Blocks.Organization.Models.Subtask;
+            base.SubtasksCollection = SmartBlocks.Blocks.Organization.Collections.Subtasks;
+            base.ActivitiesCollection = SmartBlocks.Blocks.Organization.Collections.Activities;
+            base.Activity = SmartBlocks.Blocks.Organization.Models.Activity;
+            base.ActivityType = SmartBlocks.Blocks.Organization.Models.ActivityType;
+            base.ActivityTypesCollection = SmartBlocks.Blocks.Organization.Collections.ActivityTypes;
 
             base.ForceReturn = undefined;
         },
@@ -74,7 +74,7 @@ define([
                 }
             }
         },
-        init: function (SmartBlocks) {
+        init: function () {
             var base = this;
             base.SmartBlocks = SmartBlocks;
             base.render();
@@ -151,51 +151,8 @@ define([
 
             });
 
-
-            var loading_screen = new LoadingScreen();
-            base.setContent(loading_screen.$el);
-            loading_screen.init(base.SmartBlocks);
-            loading_screen.setMax(10);
-            var app_router = new Router();
-
             base.deadlines = new base.DeadlinesCollection();
-
-            loading_screen.setLoad(0);
-            loading_screen.setText("Loading tasks");
-            base.tasks.fetch({
-                success: function () {
-                    loading_screen.setLoad(4);
-                    loading_screen.setText("Loading activities");
-                    base.activities.fetch({
-                        success: function () {
-                            loading_screen.setLoad(6);
-                            loading_screen.setText("Loading planned tasks");
-                            base.planned_tasks.fetch({
-                                success: function () {
-                                    loading_screen.setLoad(8);
-                                    loading_screen.setText("Loading activity types");
-                                    base.activity_types.fetch({
-                                        success: function () {
-                                            loading_screen.setLoad(9);
-                                            loading_screen.setText("Loading deadlines");
-                                            base.deadlines.fetch({
-                                                success: function () {
-                                                    loading_screen.setLoad(10);
-                                                    Backbone.history.start();
-                                                }
-                                            });
-
-                                        }
-                                    });
-                                }
-                            });
-
-                        }
-                    });
-
-                }
-            });
-
+            base.launchDesk("timeline");
 
         },
         render: function () {

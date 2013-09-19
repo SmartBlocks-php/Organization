@@ -5,5 +5,5 @@
     "link":"#organization/desk",
     "logo_url":"/Organization/Apps/Tasks/Resources/logo.png",
     "block_token":"organization",
-    "entry_point":"Organization/Apps/Desk/Views/Main"
+    "entry_point":"Organization/Apps/Common/Views/OrganizationView"
 }
