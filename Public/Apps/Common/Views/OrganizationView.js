@@ -150,9 +150,33 @@ define([
                 }
 
             });
+            base.load();
+
 
             base.deadlines = new base.DeadlinesCollection();
-            base.launchDesk("timeline");
+
+
+        },
+        load: function () {
+            var base = this;
+
+            if (!SmartBlocks.Url.params[0] || SmartBlocks.Url.params[0] == "desk") {
+                if (SmartBlocks.Url.params[0] == "desk" && SmartBlocks.Url.params[1])
+                    base.launchDesk(SmartBlocks.Url.params[1]);
+                else
+                    base.launchDesk("timeline");
+            } else if (SmartBlocks.Url.params[0] == "activities") {
+                if (!SmartBlocks.Url.params[1])
+                    base.launchActivitiesIndex();
+                else {
+                    if (SmartBlocks.Url.params[1] == 'new') {
+                        base.launchActivityCreation();
+                    } else if (SmartBlocks.Url.params[1].match(/^\d+$/).length > 0) {
+                        base.launchActivitiesShow(SmartBlocks.Url.params[1], SmartBlocks.Url.params[2]);
+
+                    }
+                }
+            }
 
         },
         render: function () {
@@ -179,6 +203,10 @@ define([
                         console.log(planned_task);
                     }
                 }
+            });
+
+            SmartBlocks.events.on("hashchange", function () {
+                base.load();
             });
         },
         setContent: function (element) {
@@ -240,7 +268,8 @@ define([
             if (!base.current_view || base.current_view.app_name != "activity_show" || id != base.current_view.activity.get('id')) {
                 var activity = base.activities.get(id);
                 if (!activity) {
-                    activity = new Activity({id: id});
+                    console.log(SmartBlocks);
+                    activity = new SmartBlocks.Blocks.Organization.Models.Activity({id: id});
                 }
                 base.current_view = new ActivitiesShowView(activity);
                 base.current_view.init(base.SmartBlocks, subpage);

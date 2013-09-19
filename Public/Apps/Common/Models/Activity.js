@@ -49,12 +49,12 @@ define([
         getDeadlines: function () {
             var base = this;
 
-            var deadlines_array = OrgApp.deadlines.filter(function (deadline) {
+            var deadlines_array = SmartBlocks.Blocks.Organization.Data.deadlines.filter(function (deadline) {
                 return deadline.get('activity').get('id') == base.get('id');
             });
 
             var deadlines = new OrgApp.DeadlinesCollection(deadlines_array);
-
+            console.log(deadlines);
             return deadlines;
         },
         getTasks: function () {

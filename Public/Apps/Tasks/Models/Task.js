@@ -168,7 +168,7 @@ define([
 
 
                 if (model.subtasks && !model.subtasks.models) {
-                    var subtasks_collection = new OrgApp.SubtasksCollection();
+                    var subtasks_collection = new SmartBlocks.Blocks.Organization.Collections.Subtasks();
                     for (var k in model.subtasks) {
                         var subtask = new OrgApp.Subtask(model.subtasks[k]);
                         subtasks_collection.add(subtask);

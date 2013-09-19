@@ -12,16 +12,16 @@ define([
         urlRoot: "/Organization/Deadlines",
         parse: function (response) {
             if (response.tasks) {
-                var tasks_collection = new OrgApp.TasksCollection();
+                var tasks_collection = new SmartBlocks.Blocks.Organization.Collections.Tasks();
                 for (var k in response.tasks) {
-                    var task = new OrgApp.Task(response.tasks[k]);
+                    var task = new SmartBlocks.Blocks.Organization.Models.Task(response.tasks[k]);
                     tasks_collection.add(task);
                 }
                 response.tasks = tasks_collection;
             }
 
             if (response.activity) {
-                var activity = new OrgApp.Activity(response.activity);
+                var activity = new SmartBlocks.Blocks.Organization.Models.Activity(response.activity);
                 response.activity = activity;
             }
 

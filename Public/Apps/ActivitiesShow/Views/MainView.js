@@ -102,6 +102,8 @@ define([
             var base = this;
             if (subpage)
                 base.subpage = subpage;
+            if (!base.subpage)
+                base.subpage = "summary";
             base.$el.find(".menu_button").removeClass("pure-menu-selected");
             if (base.subpage == "edition") {
                 base.renderEdition();
@@ -157,6 +159,14 @@ define([
         },
         registerEvents: function () {
             var base = this;
+
+            SmartBlocks.events.on("hashchange", function () {
+
+                var subpage = SmartBlocks.Url.params[2];
+                if (!subpage)
+                    subpage = "summary";
+                base.setSubpage(subpage);
+            });
 
             base.$el.delegate(".type_select", "change", function () {
                 var value = $(this).val();

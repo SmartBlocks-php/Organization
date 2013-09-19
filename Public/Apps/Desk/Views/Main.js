@@ -35,18 +35,19 @@ define([
             if (subapp == 'timeline') {
                 var subapp = new TimelineView();
                 base.$el.find(".desk_subapp_container").html(subapp.$el);
-                subapp.init(base.SmartBlocks);
+                subapp.init();
                 base.$el.find(".todaytimeline_tab_button").addClass("pure-menu-selected");
             } else if (subapp == 'review') {
                 var subapp = new ReviewView();
                 base.$el.find(".desk_subapp_container").html(subapp.$el);
-                subapp.init(base.SmartBlocks);
+                subapp.init();
                 base.$el.find(".todayreview").addClass("pure-menu-selected");
+
             } else if (subapp == "tomorrow") {
                 base.$el.find(".tomorrow_tab_button").addClass("pure-menu-selected");
                 var subapp = new TomorrowView();
                 base.$el.find(".desk_subapp_container").html(subapp.$el);
-                subapp.init(base.SmartBlocks);
+                subapp.init();
             }
 
         },

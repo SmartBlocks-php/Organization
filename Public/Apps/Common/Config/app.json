@@ -1,0 +1,9 @@
+{
+    "name":"Organization",
+    "token":"main",
+    "description":"Organization main application",
+    "link":"#organization/main",
+    "logo_url": "/images/icons/user.png",
+    "block_token":"organization",
+    "entry_point":"Organization/Apps/Common/Views/OrganizationView"
+}

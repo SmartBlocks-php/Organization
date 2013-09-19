@@ -13,7 +13,7 @@ define([
             base.model = activity;
             base.activity = activity;
         },
-        init: function (SmartBlocks) {
+        init: function () {
             var base = this;
             base.SmartBlocks = SmartBlocks;
 
@@ -22,6 +22,8 @@ define([
         },
         render: function () {
             var base = this;
+
+            console.log(SmartBlocks);
 
             var deadlines = base.activity.getDeadlines();
             var deadlines_index = new DeadlinesIndex(deadlines);

@@ -31,7 +31,7 @@ define([
             base.page_size = 10;
             base.page_count = 1;
         },
-        init: function (SmartBlocks) {
+        init: function () {
             var base = this;
             base.SmartBlocks = SmartBlocks;
 
@@ -68,6 +68,7 @@ define([
             for (var i = 1; i <= base.page_count; i++) {
                 base.$el.find(".pagination").append('<a href="javascript:void(0);" class="' + (base.current_page == i ? 'selected' : '') +  '" data-page="' + i + '"><div></div></a>');
             }
+
         },
         registerEvents: function () {
             var base = this;

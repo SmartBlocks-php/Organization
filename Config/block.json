@@ -52,5 +52,16 @@
             "model_location": "Organization/Apps/Common/Models/ActivityType",
             "collection_location": "Organization/Apps/Common/Collections/ActivityTypes"
         }
+    ],
+    "apps": [
+        {
+            "name": "Organization",
+            "token": "Organization",
+            "description": "Organization main application",
+            "link": "#Organization",
+            "logo_url": "/images/icons/user.png",
+            "block_token": "organization",
+            "entry_point": "Organization/Apps/Common/Views/OrganizationView"
+        }
     ]
 }

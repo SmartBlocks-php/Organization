@@ -62,7 +62,7 @@ define([
                     base.activity.save({}, {
                         success: function () {
                             OrgApp.activities.add(base.activity);
-                            window.location = "#activities/" + base.activity.get('id');
+                            window.location = "#Organization/activities/" + base.activity.get('id');
                         }
                     });
                 }
