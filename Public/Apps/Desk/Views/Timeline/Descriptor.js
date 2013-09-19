@@ -18,13 +18,13 @@ define([
 
             base.planned_task = planned_task;
         },
-        init: function (SmartBlocks) {
+        init: function () {
             var base = this;
             base.SmartBlocks = SmartBlocks;
 
-            base.task = OrgApp.tasks.get(base.planned_task.get('task').get('id'));
-            base.deadline = OrgApp.deadlines.get(base.task.get('deadline').get('id'));
-            base.activity = OrgApp.activities.get(base.task.get('activity').id);
+            base.task = SmartBlocks.Blocks.Organization.Data.tasks.get(base.planned_task.get('task').get('id'));
+            base.deadline = SmartBlocks.Blocks.Organization.Data.deadlines.get(base.task.get('deadline').get('id'));
+            base.activity = SmartBlocks.Blocks.Organization.Data.activities.get(base.task.get('activity').id);
 
             base.render();
 

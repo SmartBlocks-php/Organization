@@ -158,7 +158,7 @@ define([
                 }
             });
 
-            var deadlines_index = new DeadlinesIndexView(OrgApp.deadlines);
+            var deadlines_index = new DeadlinesIndexView(SmartBlocks.Blocks.Organization.Data.deadlines);
             base.$el.find(".deadlines_index_container").html(deadlines_index.$el);
             deadlines_index.init(base.SmartBlocks);
 

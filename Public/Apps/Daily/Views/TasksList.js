@@ -54,7 +54,7 @@ define([
             base.date.setHours(0);
             base.date.setMinutes(0);
             base.date.setSeconds(0);
-            base.SmartBlocks.startLoading("Fetching this day's tasks");
+            base.SmartBlocks.basics.startLoading("Fetching this day's tasks");
 
             base.tasks_list.fetch({
                 data: {

@@ -176,6 +176,8 @@ define([
 
                     }
                 }
+            } else if (SmartBlocks.Url.params[0] == 'planning') {
+                base.launchPlanningView();
             }
 
         },
