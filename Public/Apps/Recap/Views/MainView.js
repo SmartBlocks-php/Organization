@@ -9,7 +9,7 @@ define([
     'Organization/Apps/Recap/Views/Timeline',
     'Organization/Apps/Recap/Views/Now',
     'Organization/Apps/Recap/Views/NextDays',
-    'Organization/Apps/Daily/Collections/PlannedTasks',
+    'Organization/Apps/Collections/PlannedTasks',
     './DeadlinesInformation'
 ], function ($, _, Backbone, RecapTemplate, TodayRecapView, NextRecapView, PastRecapView, TimelineView, NowView, NextDaysView, PlannedTasksCollection, DeadlinesInformationView) {
     var MainView = Backbone.View.extend({

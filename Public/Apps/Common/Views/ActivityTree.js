@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'Organization/Apps/Tasks/Collections/Tasks',
+    'Organization/Apps/Collections/Tasks',
     './ActivityItem',
     './TasksListItem'
 ], function ($, _, Backbone, TasksCollection, ActivityListItemView, TasksListItemView) {

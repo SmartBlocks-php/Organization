@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/summary.html',
-    'Organization/Apps/Daily/Collections/PlannedTasks',
+    'Organization/Apps/Collections/PlannedTasks',
     'Organization/Apps/Common/Views/WorkloadTimeline'
 ], function ($, _, Backbone, summary_template, PlannedTasksCollection, WorkloadTimeline) {
     var View = Backbone.View.extend({
@@ -30,7 +30,7 @@ define([
             var planned_tasks = new PlannedTasksCollection();
             var task_pts = base.task.get('planned_tasks');
             for (var k in task_pts.models) {
-                var pt = OrgApp.planned_tasks.get(task_pts.models[k]);
+                var pt = SmartBlocks.Blocks.Organization.Data.planned_tasks.get(task_pts.models[k]);
                 planned_tasks.add(pt);
             }
 

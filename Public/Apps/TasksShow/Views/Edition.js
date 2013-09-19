@@ -28,7 +28,7 @@ define([
                 task: base.task,
                 due_date: base.task.getDueDate(),
                 start_date: start_date,
-                activities: OrgApp.activities.models
+                activities: SmartBlocks.Blocks.Organization.Data.activities.models
             });
             base.$el.html(template);
 

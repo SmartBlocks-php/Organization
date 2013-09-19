@@ -61,7 +61,7 @@ define([
                 var elt = $(this).serializeArray();
                 if (base.$el.hasClass("expanded")) {
 
-                    var deadline = new OrgApp.Deadline();
+                    var deadline = new SmartBlocks.Blocks.Organization.Models.Deadline();
 
                     deadline.set("name", base.$el.find(".deadline_name_input").val());
 
@@ -80,9 +80,9 @@ define([
                         deadline.set("activity", base.activity);
                     }
 
-                    deadline.set("tasks", new OrgApp.TasksCollection());
+                    deadline.set("tasks", new SmartBlocks.Blocks.Organization.Collections.Tasks());
                     deadline.save();
-                    OrgApp.deadlines.add(deadline);
+                    SmartBlocks.Blocks.Organization.Data.deadlines.add(deadline);
 
 
                     base.retract();

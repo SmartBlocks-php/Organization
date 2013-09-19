@@ -5,8 +5,8 @@ define([
     'text!../Templates/main_view.html',
     './Calendar',
     './TasksPanel',
-    'Organization/Apps/Tasks/Collections/Tasks',
-    'Organization/Apps/Tasks/Models/Task'
+    'Organization/Apps/Collections/Tasks',
+    'Organization/Apps/Models/Task'
 ], function ($, _, Backbone, MainViewTemplate, CalendarView, TasksPanel, TasksCollection, Task) {
     var View = Backbone.View.extend({
         tagName: "div",

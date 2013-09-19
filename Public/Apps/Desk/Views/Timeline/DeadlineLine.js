@@ -37,7 +37,7 @@ define([
 
             base.$el.find(".deadline_name").html(base.deadline.get('name'));
             var timeleft = base.deadline.getTimeLeft();
-            var left_time_str =  (timeleft > 0 ? "- " : "+ ") + OrgApp.common.getFullTimeString(Math.abs(timeleft));
+            var left_time_str =  (timeleft > 0 ? "- " : "+ ") + SmartBlocks.Blocks.Organization.common.getFullTimeString(Math.abs(timeleft));
 
             base.$el.find(".timeleft").html(left_time_str);
 

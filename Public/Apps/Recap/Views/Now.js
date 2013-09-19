@@ -4,7 +4,7 @@ define([
     'backbone',
     'text!Organization/Apps/Recap/Templates/now_view.html',
     'Organization/Apps/Common/Organization',
-    'Organization/Apps/Daily/Models/PlannedTask',
+    'Organization/Apps/Models/PlannedTask',
     'Organization/Apps/Recap/Views/Clock'
 ], function ($, _, Backbone, NowTemplate, Organization, PlannedTask, ClockView) {
 

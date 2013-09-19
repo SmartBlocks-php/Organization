@@ -58,7 +58,7 @@ define([
                 base.$el.addClass("late");
             }
 
-            timeleft_container.html((now < end ? "-" : "+") + " " + OrgApp.common.getFullTimeString(time_left));
+            timeleft_container.html((now < end ? "-" : "+") + " " + SmartBlocks.Blocks.Organization.common.getFullTimeString(time_left));
         },
         registerEvents: function () {
             var base = this;

@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/main_view.html',
-    'Organization/Apps/Tasks/Collections/Tasks',
+    'Organization/Apps/Collections/Tasks',
     './ThumbnailsContainer'
 ], function ($, _, Backbone, MainViewTemplate, TasksCollection, ThumbnailsContainerView) {
     var View = Backbone.View.extend({
@@ -12,7 +12,7 @@ define([
         initialize: function () {
             var base = this;
 
-            base.tasks = OrgApp.tasks;
+            base.tasks = SmartBlocks.Blocks.Organization.Data.tasks;
             base.moving = false;
             base.moving_timer = 0;
         },

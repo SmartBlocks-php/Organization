@@ -1,7 +1,7 @@
 define([
     'underscore',
     'backbone',
-    'Organization/Apps/Tasks/Models/Task'
+    'Organization/Apps/Models/Task'
 ], function (_, Backbone, Task) {
     var Model = Backbone.Model.extend({
         urlRoot:"/Organization/Subtasks",

@@ -69,16 +69,16 @@ define([
         registerEvents: function () {
             var base = this;
 
-            OrgApp.tasks.on('add', function () {
+            SmartBlocks.Blocks.Organization.Data.tasks.on('add', function () {
                 base.renderPage();
             });
 
-            OrgApp.tasks.on('remove', function () {
+            SmartBlocks.Blocks.Organization.Data.tasks.on('remove', function () {
                 base.renderPage();
             });
 
             base.$el.delegate(".task_normal_thumbnail.new", 'click', function () {
-                var task = new OrgApp.Task();
+                var task = new SmartBlocks.Blocks.Organization.Models.Task();
                 task.set('deadline', base.deadline);
                 task.set('activity', base.deadline.getActivity());
                 task.set('name', 'New task');
@@ -88,7 +88,7 @@ define([
                         base.SmartBlocks.show_message('Successfully created task');
                     }
                 });
-                OrgApp.tasks.add(task);
+                SmartBlocks.Blocks.Organization.Data.tasks.add(task);
 
             });
 

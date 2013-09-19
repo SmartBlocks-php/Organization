@@ -4,7 +4,7 @@ define([
     'backbone',
     'text!Organization/Apps/Recap/Templates/timeline.html',
     'Organization/Apps/Recap/SubApps/Timeline/Timeline',
-    'Organization/Apps/Daily/Collections/PlannedTasks'
+    'Organization/Apps/Collections/PlannedTasks'
 ], function ($, _, Backbone, TimelineTemplate, TimelineApp, PlannedTasksCollection) {
     var TimelineView = Backbone.View.extend({
         tagName: "div",

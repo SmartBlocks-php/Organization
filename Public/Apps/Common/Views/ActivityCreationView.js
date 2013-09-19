@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/activity_creation.html',
-    'Organization/Apps/Common/Models/Activity'
+    'Organization/Apps/Models/Activity'
 ], function ($, _, Backbone, ActivityCreationTemplate, Activity) {
     var View = Backbone.View.extend({
         tagName: "div",

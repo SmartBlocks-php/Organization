@@ -62,7 +62,7 @@ define([
                 base.$el.addClass("late");
             }
 
-            timeleft_container.html((now < end ? "-" : "+") + " " + OrgApp.common.getFullTimeString(time_left));
+            timeleft_container.html((now < end ? "-" : "+") + " " + SmartBlocks.Blocks.Organization.common.getFullTimeString(time_left));
             base.worktime_pb.updateWorktime(base.deadline.getWork());
         },
         expand: function () {
@@ -101,7 +101,7 @@ define([
                         if (confirm("Are you sure you want to delete this deadline ?")) {
                             base.deadline.destroy({
                                 success: function () {
-                                    OrgApp.deadlines.remove(base.deadline);
+                                    SmartBlocks.Blocks.Organization.Data.deadlines.remove(base.deadline);
                                     base.$el.remove();
                                     base.SmartBlocks.show_message("Successfully deleted deadline");
                                 },

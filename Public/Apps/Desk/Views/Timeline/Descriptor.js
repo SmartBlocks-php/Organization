@@ -49,7 +49,7 @@ define([
 
             var clock_view = new Clock();
             base.$el.find(".clock_container").html(clock_view.$el);
-            clock_view.init(base.SmartBlocks, OrgApp.planned_tasks);
+            clock_view.init(base.SmartBlocks, SmartBlocks.Blocks.Organization.Data.planned_tasks);
 
 
             base.update();
@@ -71,9 +71,9 @@ define([
 
                 var timing_tpl = _.template(current_event_tpl, {
                     end_time: time,
-                    worked_time: OrgApp.common.getTimeString(now.getTime() - base.planned_task.getStart().getTime()),
-                    time_to_end: OrgApp.common.getTimeString(base.planned_task.getEnd().getTime() - now.getTime()),
-                    total_task_worked_time: OrgApp.common.getTimeString(base.task.getWork().done)
+                    worked_time: SmartBlocks.Blocks.Organization.common.getTimeString(now.getTime() - base.planned_task.getStart().getTime()),
+                    time_to_end: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.getEnd().getTime() - now.getTime()),
+                    total_task_worked_time: SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done)
                 });
 
                 base.$el.find(".timing_container").html(timing_tpl);
@@ -89,8 +89,8 @@ define([
                 var timing_tpl = _.template(future_event_tpl, {
                     end_time: etime,
                     start_time: stime,
-                    duration: OrgApp.common.getTimeString(base.planned_task.get('duration')),
-                    total_task_worked_time: base.task.getWork().done ? OrgApp.common.getTimeString(base.task.getWork().done) : '-'
+                    duration: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.get('duration')),
+                    total_task_worked_time: base.task.getWork().done ? SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done) : '-'
                 });
 
                 base.$el.find(".timing_container").html(timing_tpl);
@@ -106,8 +106,8 @@ define([
                 var timing_tpl = _.template(future_event_tpl, {
                     end_time: etime,
                     start_time: stime,
-                    duration: OrgApp.common.getTimeString(base.planned_task.get('duration')),
-                    total_task_worked_time: base.task.getWork().done ? OrgApp.common.getTimeString(base.task.getWork().done) : '-'
+                    duration: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.get('duration')),
+                    total_task_worked_time: base.task.getWork().done ? SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done) : '-'
                 });
             }
         },

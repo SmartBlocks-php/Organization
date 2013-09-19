@@ -30,8 +30,8 @@ define([
             base.$el.find(".descriptor_container_top").addClass("disabled");
             var firstHour = new Date().getHours();
             base.events = [];
-            for (var k in OrgApp.planned_tasks.models) {
-                var planned_task = OrgApp.planned_tasks.models[k];
+            for (var k in SmartBlocks.Blocks.Organization.Data.planned_tasks.models) {
+                var planned_task = SmartBlocks.Blocks.Organization.Data.planned_tasks.models[k];
                 var start = planned_task.getStart();
                 var end = new Date(start);
                 var duration = parseInt(planned_task.get("duration"));
@@ -87,7 +87,7 @@ define([
 
 
                     var planned_task = new PlannedTask();
-                    var task = OrgApp.parent.tasks.get($(this).attr("id"));
+                    var task = SmartBlocks.Blocks.Organization.Data.tasks.get($(this).attr("id"));
                     planned_task.setStart(date);
                     planned_task.set("duration", 3600000);
                     planned_task.set("content", task.get("name"));
@@ -105,7 +105,7 @@ define([
 
                 },
                 eventDrop: function (event, jsEvent, ui, view) {
-                    var planned_task = OrgApp.planned_tasks.get(event.id);
+                    var planned_task = SmartBlocks.Blocks.Organization.Data.planned_tasks.get(event.id);
                     if (planned_task) {
                         planned_task.setStart(event.start);
 
@@ -116,7 +116,7 @@ define([
 
                 },
                 eventResize: function (event) {
-                    var planned_task = OrgApp.planned_tasks.get(event.id);
+                    var planned_task = SmartBlocks.Blocks.Organization.Data.planned_tasks.get(event.id);
 
                     if (planned_task) {
                         planned_task.setStart(event.start);
@@ -138,7 +138,7 @@ define([
                     if (!elt.hasClass("selected")) {
                         base.$el.find(".selected").removeClass("selected");
                         elt.addClass("selected");
-                        base.planned_task = OrgApp.planned_tasks.get(event.id);
+                        base.planned_task = SmartBlocks.Blocks.Organization.Data.planned_tasks.get(event.id);
                         base.renderDescriptor();
                         base.manual = true;
 
@@ -237,7 +237,7 @@ define([
         update: function () {
             var base = this;
 
-            var planned_task = OrgApp.planned_tasks.find(function (pt) {
+            var planned_task = SmartBlocks.Blocks.Organization.Data.planned_tasks.find(function (pt) {
                 var now = new Date();
 
                 return now > pt.getStart() && now < pt.getEnd();

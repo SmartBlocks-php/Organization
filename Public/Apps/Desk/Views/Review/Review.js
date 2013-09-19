@@ -11,7 +11,7 @@ define([
         initialize: function () {
             var base = this;
             var now = new Date();
-            base.tasks = new OrgApp.TasksCollection(OrgApp.tasks.filter(function (task) {
+            base.tasks = new SmartBlocks.Blocks.Organization.Collections.Tasks(SmartBlocks.Blocks.Organization.Data.tasks.filter(function (task) {
                 var planned_tasks = task.getPlannedTasks();
                 var display = false;
                 for (var k in planned_tasks.models) {

@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'Organization/Apps/Common/Models/Activity'
+    'Organization/Apps/Models/Activity'
 ], function ($, _, Backbone, Activity) {
     var Collection = Backbone.Collection.extend({
         model: Activity,

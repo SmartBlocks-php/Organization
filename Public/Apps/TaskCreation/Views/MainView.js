@@ -3,8 +3,8 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/main_view.html',
-    'Organization/Apps/Tasks/Models/Task',
-    'Organization/Apps/Tasks/Collections/Tasks',
+    'Organization/Apps/Models/Task',
+    'Organization/Apps/Collections/Tasks',
     'jqueryui'
 ], function ($, _, Backbone, MainViewTemplate, Task, TasksCollection) {
     var View = Backbone.View.extend({
@@ -19,7 +19,7 @@ define([
             var base = this;
             base.SmartBlocks = SmartBlocks;
             if (activity_id) {
-                base.activity = OrgApp.activities.get(activity_id);
+                base.activity = SmartBlocks.Blocks.Organization.Data.activities.get(activity_id);
             }
             base.render();
             base.registerEvents();
@@ -29,7 +29,7 @@ define([
             var base = this;
             console.log(base.activity);
             var template = _.template(MainViewTemplate, {
-                activities: OrgApp.activities.models,
+                activities: SmartBlocks.Blocks.Organization.Data.activities.models,
                 selected_activity: base.activity
             });
             base.$el.html(template);
@@ -54,7 +54,7 @@ define([
                 }
                 var type = base.$el.find(".type_input").val();
                 if (type > 0) {
-                    base.activity = OrgApp.activities.get(type);
+                    base.activity = SmartBlocks.Blocks.Organization.Data.activities.get(type);
                     base.task.set('activity', base.activity);
                     base.$el.find(".type_field_error").hide();
                 } else {
@@ -77,8 +77,8 @@ define([
 
                     base.task.save({}, {
                         success: function () {
-                            OrgApp.tasks.add(base.task);
-                            OrgApp.goTo("#tasks/" + base.task.get('id'));
+                            SmartBlocks.Blocks.Organization.Data.tasks.add(base.task);
+                            SmartBlocks.Blocks.Organization.Data.goTo("#tasks/" + base.task.get('id'));
                         }
                     });
                 }

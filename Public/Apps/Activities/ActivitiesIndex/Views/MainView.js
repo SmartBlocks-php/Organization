@@ -13,7 +13,7 @@ define([
         initialize: function () {
             var base = this;
             base.$el.addClass("loading");
-            base.activities = OrgApp.activities;
+            base.activities = SmartBlocks.Blocks.Organization.Data.activities;
             base.moving = false;
             base.moving_timer = 0;
         },

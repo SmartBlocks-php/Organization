@@ -9,16 +9,16 @@
             "collection_name": "Tasks",
             "plural": "tasks",
             "ws_origin": "/Organization/Tasks",
-            "model_location": "Organization/Apps/Tasks/Models/Task",
-            "collection_location": "Organization/Apps/Tasks/Collections/Tasks"
+            "model_location": "Organization/Apps/Models/Task",
+            "collection_location": "Organization/Apps/Collections/Tasks"
         },
         {
             "model_name": "PlannedTask",
             "collection_name": "PlannedTasks",
             "plural": "planned_tasks",
             "ws_origin": "/Organization/PlannedTasks",
-            "model_location": "Organization/Apps/Daily/Models/PlannedTask",
-            "collection_location": "Organization/Apps/Daily/Collections/PlannedTasks"
+            "model_location": "Organization/Apps/Models/PlannedTask",
+            "collection_location": "Organization/Apps/Collections/PlannedTasks"
         },
         {
             "model_name": "Deadline",
@@ -41,7 +41,7 @@
             "collection_name": "Activities",
             "plural": "activities",
             "ws_origin": "/Organization/Activities",
-            "model_location": "Organization/Apps/Common/Models/Activity",
+            "model_location": "Organization/Apps/Models/Activity",
             "collection_location": "Organization/Apps/Common/Collections/Activities"
         },
         {
@@ -49,7 +49,7 @@
             "collection_name": "ActivityTypes",
             "plural": "activity_types",
             "ws_origin": "/Organization/ActivityTypes",
-            "model_location": "Organization/Apps/Common/Models/ActivityType",
+            "model_location": "Organization/Apps/Models/ActivityType",
             "collection_location": "Organization/Apps/Common/Collections/ActivityTypes"
         }
     ],

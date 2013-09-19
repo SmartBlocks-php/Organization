@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'Organization/Apps/Tasks/Collections/Tasks',
+    'Organization/Apps/Collections/Tasks',
     'text!Organization/Apps/Recap/Templates/next_recap.html',
     'Organization/Apps/Recap/Views/DeadlineItem'
 ], function ($, _, Backbone, TasksCollection, NextRecapTemplate, DeadlineItem) {

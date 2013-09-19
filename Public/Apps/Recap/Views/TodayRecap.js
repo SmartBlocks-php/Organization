@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!Organization/Apps/Recap/Templates/today_recap.html',
-    'Organization/Apps/Daily/Collections/PlannedTasks'
+    'Organization/Apps/Collections/PlannedTasks'
 ], function ($, _, Backbone, TodayRecapTemplate, PlannedTasksCollection) {
 
 

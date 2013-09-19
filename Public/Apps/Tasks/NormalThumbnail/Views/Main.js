@@ -158,7 +158,7 @@ define([
 
             base.$el.delegate('.create_subtask_button', 'mouseup', function (e) {
                 if (e.which == 1) {
-                    var subtask = new OrgApp.Subtask();
+                    var subtask = new SmartBlocks.Blocks.Organization.Models.Subtask();
                     subtask.set('task', base.task);
                     subtask.set('name', "New subtask");
                     subtask.set('duration', 3600000);

@@ -5,7 +5,7 @@ define([
     'text!../Templates/main_view.html',
     'Organization/Apps/Common/Views/TasksList',
     'Organization/Apps/Common/Views/PlannedTasksList',
-    'Organization/Apps/Tasks/Models/Task',
+    'Organization/Apps/Models/Task',
     'Organization/Apps/Common/Views/TaskPopup',
     './TimeStats',
     'Organization/Apps/Common/Views/TaskTags',

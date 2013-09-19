@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/task_panel.html',
-    'Organization/Apps/Tasks/Collections/Tasks',
+    'Organization/Apps/Collections/Tasks',
     './TaskItem'
 ], function ($, _, Backbone, TaskPanelTemplate, TasksCollection, TaskItem) {
     var View = Backbone.View.extend({

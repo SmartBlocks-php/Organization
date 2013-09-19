@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/main_view.html',
-    'Organization/Apps/Common/Models/Activity',
+    'Organization/Apps/Models/Activity',
     'Organization/Apps/Common/Collections/ActivityTypes'
 ], function ($, _, Backbone, MainViewTemplate, Activity, ActivityTypesCollection) {
     var View = Backbone.View.extend({
@@ -61,7 +61,7 @@ define([
                 if (valid) {
                     base.activity.save({}, {
                         success: function () {
-                            OrgApp.activities.add(base.activity);
+                            SmartBlocks.Blocks.Organization.Data.activities.add(base.activity);
                             window.location = "#Organization/activities/" + base.activity.get('id');
                         }
                     });

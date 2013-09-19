@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/deadlines_information.html',
-    'Organization/Apps/Tasks/Collections/Tasks',
+    'Organization/Apps/Collections/Tasks',
     'Organization/Apps/Common/Views/DeadlineThumbnail'
 ], function ($, _, Backbone, DeadlinesInformationTemplate, TasksCollection, DeadlineThumbnail) {
     var View = Backbone.View.extend({

@@ -4,8 +4,8 @@ define([
     'backbone',
     'text!Organization/Apps/Recap/Templates/next_day.html',
     'Organization/Apps/Common/Organization',
-    'Organization/Apps/Tasks/Collections/Tasks',
-    'Organization/Apps/Daily/Collections/PlannedTasks',
+    'Organization/Apps/Collections/Tasks',
+    'Organization/Apps/Collections/PlannedTasks',
     'Organization/Apps/Daily/Views/TaskItem',
     'Organization/Apps/Daily/Views/PlannedListItem'
 ], function ($, _, Backbone, NextDayTemplate, Organization, DeadlinesCollection, PlannedTasksCollection, TaskItem, PlannedListItem) {

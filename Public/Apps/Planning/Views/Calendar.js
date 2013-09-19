@@ -2,8 +2,8 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'Organization/Apps/Daily/Models/PlannedTask',
-    'Organization/Apps/Daily/Collections/PlannedTasks',
+    'Organization/Apps/Models/PlannedTask',
+    'Organization/Apps/Collections/PlannedTasks',
     'ContextMenuView',
     './PlannedTaskPopup',
     'jqueryui',
@@ -18,7 +18,7 @@ define([
         init: function (SmartBlocks, parent) {
             var base = this;
             base.SmartBlocks = SmartBlocks;
-            base.planned_tasks = OrgApp.planned_tasks;
+            base.planned_tasks = SmartBlocks.Blocks.Organization.Data.planned_tasks;
             base.parent = parent;
             base.render();
             base.registerEvents();

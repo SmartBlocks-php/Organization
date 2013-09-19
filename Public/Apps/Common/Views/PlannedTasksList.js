@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'Organization/Apps/Daily/Collections/PlannedTasks',
+    'Organization/Apps/Collections/PlannedTasks',
     './PlannedTasksListItem'
 ], function ($, _, Backbone, PlannedTasksCollection, PlannedTasksListItem) {
     var PlannedList = Backbone.View.extend({

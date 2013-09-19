@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!Organization/Apps/Common/Templates/task_popup.html',
-    'Organization/Apps/Common/Models/Activity',
+    'Organization/Apps/Models/Activity',
     'Organization/Apps/Common/Collections/Activities'
 ], function ($, _, Backbone, TaskPopupTemplate, Activity, ActivitiesCollection) {
     var TaskPopup = Backbone.View.extend({

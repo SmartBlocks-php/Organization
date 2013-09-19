@@ -74,7 +74,7 @@ define([
             var base = this;
 
             var tasks = base.get("tasks");
-            var pt_collection = new OrgApp.PlannedTasksCollection();
+            var pt_collection = new SmartBlocks.Blocks.Organization.Collections.PlannedTasks();
             for (var k in tasks.models) {
                 var pts = tasks.models[k].get("planned_tasks");
                 for (var i in pts.models) {
@@ -86,11 +86,11 @@ define([
         },
         getTasks: function () {
             var base = this;
-            var tasks = OrgApp.tasks.filter(function (task) {
+            var tasks = SmartBlocks.Blocks.Organization.Data.tasks.filter(function (task) {
                 return task.get('deadline') && task.get('deadline').get('id') == base.get('id');
             });
 
-            return new OrgApp.TasksCollection(tasks);
+            return new SmartBlocks.Blocks.Organization.Collections.Tasks(tasks);
         },
         getActivity: function () {
             var base = this;
@@ -119,11 +119,11 @@ define([
 
             stop.setTime(now.getTime() + (Math.random() * 100000));
 
-            var tasks = new OrgApp.TasksCollection();
+            var tasks = new SmartBlocks.Blocks.Organization.Collections.Tasks();
 
             for (var j = 0; j < 5; j++) {
-                var rand = Math.round(Math.random() * OrgApp.tasks.models.length);
-                tasks.add(OrgApp.tasks.at(rand));
+                var rand = Math.round(Math.random() * SmartBlocks.Blocks.Organization.Data.tasks.models.length);
+                tasks.add(SmartBlocks.Blocks.Organization.Data.tasks.at(rand));
             }
 
             var deadline = new Model({

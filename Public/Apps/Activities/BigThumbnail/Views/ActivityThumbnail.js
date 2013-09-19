@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/activity_thumbnail.html',
-    'Organization/Apps/Daily/Collections/PlannedTasks',
+    'Organization/Apps/Collections/PlannedTasks',
     'Organization/Apps/Common/Views/WorkloadTimeline',
     './Deadlines'
 ], function ($, _, Backbone, ActivityThumbnailTemplate, PlannedTasksCollection, WorkloadTimelineView, DeadlinesView) {

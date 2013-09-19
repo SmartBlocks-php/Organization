@@ -5,7 +5,7 @@ define([
     'text!../Templates/activity_preview.html',
     'Organization/Apps/Common/Views/TasksList',
     'Organization/Apps/Common/Views/WorkloadTimeline',
-    'Organization/Apps/Daily/Collections/PlannedTasks'
+    'Organization/Apps/Collections/PlannedTasks'
 ], function ($, _, Backbone, ActivityPreviewTemplate, TasksListView, WorkloadTimelineView, PlannedTasksCollection) {
     var View = Backbone.View.extend({
         tagName:"div",
