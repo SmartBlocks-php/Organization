@@ -21,8 +21,6 @@ define([
                 var base = this;
                 window.OrgApp = base;
                 SmartBlocks.Blocks.Organization.common = CommonMethods;
-
-
                 SmartBlocks.Blocks.Organization.ForceReturn = undefined;
             },
             goTo: function (url) {
@@ -37,111 +35,36 @@ define([
                     }
                 }
             },
-            init: function () {
+            init: function (app) {
                 var base = this;
                 base.SmartBlocks = SmartBlocks;
                 base.render();
                 base.registerEvents();
+                base.app = app;
 
-                var Router = Backbone.Router.extend({
-                    routes: {
-                        "week": "week",
-                        "month": "month",
-                        "daily": "daily",
-                        "recap": "recap",
-                        "activities/new": "activityCreation",
-                        "activities": "activitiesIndex",
-                        "activities/:id": "activitiesShow",
-                        "activities/:id/:subpage": "activitiesShowSubpage",
-                        "tasks/new": "taskCreation",
-                        "tasks/new/activity=:id": "taskCreation",
-                        "tasks/:id": "tasksShow",
-                        "tasks/:id/:subpage": "tasksShowSubpage",
-                        "tasks": "tasksIndex",
-                        "planning": "planning",
-                        'desk': 'desk',
-                        'desk/:subapp': 'desk'
+                base.app.initRoutes({
+                    desk: function (subapp) {
 
+                        base.launchDesk(subapp || "timeline");
                     },
-                    week: function () {
-                        base.launchWeek();
-                    },
-                    month: function () {
-                        base.launchCalendar();
-                    },
-                    daily: function () {
-                        base.launchPlanning();
-                    },
-                    recap: function () {
-                        base.launchRecap();
-                    },
-                    activitiesIndex: function () {
+                    activities_index: function () {
                         base.launchActivitiesIndex();
                     },
-                    tasksBoard: function () {
-                        base.launchTasksBoard();
+                    activity_creation: function () {
+                        base.launchActivityCreation();
                     },
-                    activitiesShow: function (id) {
-                        base.launchActivitiesShow(id, "summary");
-                    },
-                    activitiesShowSubpage: function (id, subpage) {
+                    activity_show: function (id, subpage) {
                         base.launchActivitiesShow(id, subpage);
                     },
-                    tasksShow: function (id) {
-                        base.launchTasksShow(id, "summary");
-                    },
-                    tasksShowSubpage: function (id, subpage) {
-                        base.launchTasksShow(id, subpage);
+                    objectives: function () {
+                        base.launchObjectives();
                     },
                     planning: function () {
                         base.launchPlanningView();
-                    },
-                    tasksIndex: function () {
-                        base.launchTasksIndex();
-                    },
-                    activityCreation: function () {
-                        base.launchActivityCreation();
-                    },
-                    taskCreation: function (id) {
-                        base.launchTaskCreation(id);
-                    },
-                    desk: function (subapp) {
-                        if (subapp)
-                            base.launchDesk(subapp);
-                        else
-                            base.launchDesk("timeline");
                     }
-
                 });
-                base.load();
-
 
                 base.deadlines = new SmartBlocks.Blocks.Organization.Collections.Deadlines();
-
-
-            },
-            load: function () {
-                var base = this;
-
-                if (!SmartBlocks.Url.params[0] || SmartBlocks.Url.params[0] == "desk") {
-                    if (SmartBlocks.Url.params[0] == "desk" && SmartBlocks.Url.params[1])
-                        base.launchDesk(SmartBlocks.Url.params[1]);
-                    else
-                        base.launchDesk("timeline");
-                } else if (SmartBlocks.Url.params[0] == "activities") {
-                    if (!SmartBlocks.Url.params[1])
-                        base.launchActivitiesIndex();
-                    else {
-                        if (SmartBlocks.Url.params[1] == 'new') {
-                            base.launchActivityCreation();
-                        } else if (SmartBlocks.Url.params[1].match(/^\d+$/).length > 0) {
-                            base.launchActivitiesShow(SmartBlocks.Url.params[1], SmartBlocks.Url.params[2]);
-
-                        }
-                    }
-                } else if (SmartBlocks.Url.params[0] == 'planning') {
-                    base.launchPlanningView();
-                }
 
             },
             render: function () {
@@ -168,10 +91,6 @@ define([
                             console.log(planned_task);
                         }
                     }
-                });
-
-                SmartBlocks.events.on("hashchange", function () {
-                    base.load();
                 });
             },
             setContent: function (element) {
@@ -307,6 +226,10 @@ define([
                         }
                     }
                 });
+            },
+            launchObjectives: function () {
+                var base = this;
+                base.setContent("Objectives views");
             }
         });
 

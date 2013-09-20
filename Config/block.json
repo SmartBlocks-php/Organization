@@ -61,7 +61,17 @@
             "link": "#Organization",
             "logo_url": "/images/icons/user.png",
             "block_token": "organization",
-            "entry_point": "Organization/Apps/Common/Views/OrganizationView"
+            "entry_point": "Organization/Apps/Common/Views/OrganizationView",
+            "routing": {
+                "-": "desk",
+                "desk/:subapp": "desk",
+                "activities": "activities_index",
+                "activities/new" : "activity_creation",
+                "activities/:id" : "activity_show",
+                "activities/:id/:subpage" : "activity_show",
+                "planning": "planning",
+                "objectives": "objectives"
+            }
         }
     ]
 }

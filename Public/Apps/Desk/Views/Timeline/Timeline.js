@@ -124,11 +124,7 @@ define([
 
                         console.log(event, planned_task.getStart());
 
-                        planned_task.save({}, {
-                            success: function () {
-                                base.parent.events.trigger("updated_planned_task");
-                            }
-                        });
+                        planned_task.save();
 
                     }
 
@@ -223,8 +219,6 @@ define([
         renderDescriptor: function () {
             var base = this;
             if (base.planned_task) {
-
-                console.log(base.planned_task);
                 var descriptor_view = new DescriptorView(base.planned_task);
                 base.$el.find(".descriptor_container_top").removeClass("disabled");
                 base.$el.find('.descriptor_container').html(descriptor_view.$el);

@@ -160,14 +160,6 @@ define([
         registerEvents: function () {
             var base = this;
 
-            SmartBlocks.events.on("hashchange", function () {
-
-                var subpage = SmartBlocks.Url.params[2];
-                if (!subpage)
-                    subpage = "summary";
-                base.setSubpage(subpage);
-            });
-
             base.$el.delegate(".type_select", "change", function () {
                 var value = $(this).val();
                 var type = new ActivityType({
