@@ -42,6 +42,67 @@ define([
                 base.registerEvents();
                 base.app = app;
 
+                SmartBlocks.Shortcuts.add([
+                    17, 18, 80
+                ], function () {
+                    window.location = "#Organization/planning";
+                }, "#Organization");
+
+                SmartBlocks.Shortcuts.add([
+                    17,18, 68
+                ], function () {
+                    window.location = "#Organization/desk";
+                }, "#Organization");
+
+                SmartBlocks.Shortcuts.add([
+                    17, 18, 65
+                ], function () {
+                    window.location = "#Organization/activities";
+                }, "#Organization");
+
+                SmartBlocks.Shortcuts.add([
+                    17, 18, 78
+                ], function () {
+                    window.location = "#Organization/activities/new";
+                }, "#Organization/activities");
+
+                SmartBlocks.Shortcuts.add([
+                    17, 18, 90
+                ], function () {
+                    SmartBlocks.router.back();
+                }, "#Organization/activities/new");
+
+                SmartBlocks.Shortcuts.add([
+                    17, 18, 39
+                ], function () {
+                    if (SmartBlocks.Url.params[SmartBlocks.Url.params.length - 1] == "desk" || SmartBlocks.Url.params[SmartBlocks.Url.params.length - 1] == "timeline") {
+                        window.location = "#Organization/desk/review";
+                    }
+                    if (SmartBlocks.Url.params[SmartBlocks.Url.params.length - 1] == "review") {
+                        window.location = "#Organization/desk/tomorrow";
+                    }
+
+                    if (SmartBlocks.Url.params[SmartBlocks.Url.params.length - 1] == "tomorrow") {
+                        window.location = "#Organization/desk/timeline";
+                    }
+                }, "#Organization/desk");
+
+                SmartBlocks.Shortcuts.add([
+                    17, 18, 37
+                ], function () {
+                    if (SmartBlocks.Url.params[SmartBlocks.Url.params.length - 1] == "desk" || SmartBlocks.Url.params[SmartBlocks.Url.params.length - 1] == "timeline") {
+                        window.location = "#Organization/desk/tomorrow";
+                    }
+                    if (SmartBlocks.Url.params[SmartBlocks.Url.params.length - 1] == "review") {
+                        window.location = "#Organization/desk/timeline";
+                    }
+
+                    if (SmartBlocks.Url.params[SmartBlocks.Url.params.length - 1] == "tomorrow") {
+                        window.location = "#Organization/desk/review";
+                    }
+                }, "#Organization/desk");
+
+
                 base.app.initRoutes({
                     desk: function (subapp) {
 

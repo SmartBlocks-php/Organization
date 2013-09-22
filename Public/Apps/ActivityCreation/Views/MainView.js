@@ -17,14 +17,12 @@ define([
             var base = this;
             base.SmartBlocks = SmartBlocks;
 
-            base.activity_types = new ActivityTypesCollection();
-            base.activity_types.fetch({
-                success: function () {
-                    base.render();
-                    base.registerEvents();
 
-                }
-            });
+
+            base.activity_types = new SmartBlocks.Blocks.Organization.Collections.ActivityTypes();
+            base.render();
+            base.registerEvents();
+
         },
         render: function () {
             var base = this;
@@ -68,6 +66,10 @@ define([
                 }
 
 
+            });
+
+            base.$el.delegate(".cancel_button", "click", function () {
+                SmartBlocks.router.back();
             });
         }
     });
