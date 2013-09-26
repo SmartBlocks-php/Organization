@@ -75,6 +75,8 @@ define([
             } else {
                 base.$el.parent().find(".expanded").removeClass("expanded");
                 base.$el.addClass("expanded");
+                base.$el.find(".deadline_body").css("height", base.$el.parent().height() - 300);
+                console.log(base.$el.parent().height());
                 base.$el.find(".deadline_body").slideDown(200);
                 var transform_n = -parseInt(base.$el.position().top - parseInt(base.$el.parent().css("margin-top")));
                 var transform = "translateY(-" + parseInt(base.$el.position().top) + "px)";

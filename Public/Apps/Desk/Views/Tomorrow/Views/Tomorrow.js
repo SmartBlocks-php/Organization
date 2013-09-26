@@ -9,7 +9,7 @@ define([
 ], function ($, _, Backbone, main_template, DeadlinesIndexView) {
     var View = Backbone.View.extend({
         tagName: "div",
-        className: "a_class",
+        className: "tomorrow_view",
         initialize: function () {
             var base = this;
         },
