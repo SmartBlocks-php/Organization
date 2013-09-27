@@ -15,15 +15,15 @@ define([
     'Organization/Apps/Common/Organization'
 ], function ($, _, Backbone, LoadingScreen, Template, ActivitiesIndexView, ActivitiesShowView, TasksShow, PlanningView, TasksIndex, ActivityCreationView, TaskCreationView, DeskView, CommonMethods) {
         var OrganizationView = Backbone.View.extend({
-            tagName: "div",
-            className: "organization_view",
-            initialize: function () {
+            tagName:"div",
+            className:"organization_view",
+            initialize:function () {
                 var base = this;
                 window.OrgApp = base;
                 SmartBlocks.Blocks.Organization.common = CommonMethods;
                 SmartBlocks.Blocks.Organization.ForceReturn = undefined;
             },
-            goTo: function (url) {
+            goTo:function (url) {
                 var base = this;
 
                 if (url) {
@@ -35,7 +35,7 @@ define([
                     }
                 }
             },
-            init: function (app) {
+            init:function (app) {
                 var base = this;
                 base.SmartBlocks = SmartBlocks;
                 base.render();
@@ -49,7 +49,7 @@ define([
                 }, "#Organization");
 
                 SmartBlocks.Shortcuts.add([
-                    17,18, 68
+                    17, 18, 68
                 ], function () {
                     window.location = "#Organization/desk";
                 }, "#Organization");
@@ -104,23 +104,23 @@ define([
 
 
                 base.app.initRoutes({
-                    desk: function (subapp) {
+                    desk:function (subapp) {
 
                         base.launchDesk(subapp || "timeline");
                     },
-                    activities_index: function () {
+                    activities_index:function () {
                         base.launchActivitiesIndex();
                     },
-                    activity_creation: function () {
+                    activity_creation:function () {
                         base.launchActivityCreation();
                     },
-                    activity_show: function (id, subpage) {
+                    activity_show:function (id, subpage) {
                         base.launchActivitiesShow(id, subpage);
                     },
-                    objectives: function () {
+                    objectives:function () {
                         base.launchObjectives();
                     },
-                    planning: function () {
+                    planning:function () {
                         base.launchPlanningView();
                     }
                 });
@@ -128,12 +128,12 @@ define([
                 base.deadlines = new SmartBlocks.Blocks.Organization.Collections.Deadlines();
 
             },
-            render: function () {
+            render:function () {
                 var base = this;
                 var template = _.template(Template, {});
                 base.$el.html(template);
             },
-            registerEvents: function () {
+            registerEvents:function () {
                 var base = this;
 
                 base.SmartBlocks.events.on("ws_notification", function (message) {
@@ -154,11 +154,11 @@ define([
                     }
                 });
             },
-            setContent: function (element) {
+            setContent:function (element) {
                 var base = this;
                 base.$el.find(".sub_app_holder").html(element);
             },
-            launchCalendar: function () {
+            launchCalendar:function () {
                 var base = this;
                 base.current_view = new CalendarView();
                 base.current_view.init(base.SmartBlocks);
@@ -166,7 +166,7 @@ define([
                 base.$el.find(".control_bar a.month").addClass("selected");
                 base.setContent(base.current_view.$el)
             },
-            launchWeek: function () {
+            launchWeek:function () {
                 var base = this;
                 base.current_view = new WeekView();
                 base.current_view.init(base.SmartBlocks);
@@ -174,7 +174,7 @@ define([
                 base.$el.find(".control_bar a.week").addClass("selected");
                 base.setContent(base.current_view.$el)
             },
-            launchPlanning: function () {
+            launchPlanning:function () {
                 var base = this;
                 base.current_view = new DailyView();
                 base.current_view.init(base.SmartBlocks);
@@ -183,7 +183,7 @@ define([
                 base.setContent(base.current_view.$el);
 
             },
-            launchRecap: function () {
+            launchRecap:function () {
                 var base = this;
                 base.current_view = new RecapView();
                 base.current_view.init(base.SmartBlocks);
@@ -191,7 +191,7 @@ define([
                 base.$el.find(".control_bar a.recap").addClass("selected");
                 base.setContent(base.current_view.$el);
             },
-            launchActivitiesIndex: function () {
+            launchActivitiesIndex:function () {
                 var base = this;
                 base.current_view = new ActivitiesIndexView();
                 base.current_view.init(base.SmartBlocks);
@@ -199,7 +199,7 @@ define([
                 base.$el.find(".control_bar a.activities").addClass("selected");
                 base.setContent(base.current_view.$el);
             },
-            launchTasksBoard: function () {
+            launchTasksBoard:function () {
                 var base = this;
 
                 base.current_view = new TasksBoardView();
@@ -208,13 +208,13 @@ define([
                 base.$el.find(".control_bar a.tasks").addClass("selected");
                 base.setContent(base.current_view.$el);
             },
-            launchActivitiesShow: function (id, subpage) {
+            launchActivitiesShow:function (id, subpage) {
                 var base = this;
                 if (!base.current_view || base.current_view.app_name != "activity_show" || id != base.current_view.activity.get('id')) {
                     var activity = SmartBlocks.Blocks.Organization.Data.activities.get(id);
                     if (!activity) {
                         console.log(SmartBlocks);
-                        activity = new SmartBlocks.Blocks.Organization.Models.Activity({id: id});
+                        activity = new SmartBlocks.Blocks.Organization.Models.Activity({id:id});
                     }
                     base.current_view = new ActivitiesShowView(activity);
                     base.current_view.init(base.SmartBlocks, subpage);
@@ -226,7 +226,7 @@ define([
                 }
 
             },
-            launchTasksShow: function (id, subpage) {
+            launchTasksShow:function (id, subpage) {
                 var base = this;
                 var task = base.tasks.get(id);
                 base.current_view = new TasksShow(task);
@@ -235,7 +235,7 @@ define([
                 base.setContent(base.current_view.$el);
                 base.current_view.init(base.SmartBlocks, subpage);
             },
-            launchTasksIndex: function () {
+            launchTasksIndex:function () {
                 var base = this;
                 base.current_view = new TasksIndex();
                 base.$el.find(".control_bar a").removeClass("selected");
@@ -243,7 +243,7 @@ define([
                 base.setContent(base.current_view.$el);
                 base.current_view.init(base.SmartBlocks);
             },
-            launchPlanningView: function () {
+            launchPlanningView:function () {
                 var base = this;
                 base.current_view = new PlanningView();
 
@@ -252,7 +252,7 @@ define([
                 base.setContent(base.current_view.$el);
                 base.current_view.init(base.SmartBlocks);
             },
-            launchActivityCreation: function () {
+            launchActivityCreation:function () {
                 var base = this;
                 base.current_view = new ActivityCreationView();
 
@@ -261,7 +261,7 @@ define([
                 base.setContent(base.current_view.$el);
                 base.current_view.init(base.SmartBlocks);
             },
-            launchTaskCreation: function (id) {
+            launchTaskCreation:function (id) {
                 var base = this;
                 base.current_view = new TaskCreationView();
                 base.$el.find(".control_bar a").removeClass("selected");
@@ -269,7 +269,7 @@ define([
                 base.setContent(base.current_view.$el);
                 base.current_view.init(base.SmartBlocks, id);
             },
-            launchDesk: function (subapp) {
+            launchDesk:function (subapp) {
                 var base = this;
                 base.current_view = new DeskView();
                 base.$el.find(".control_bar a").removeClass("selected");
@@ -278,18 +278,19 @@ define([
                 base.current_view.init(base.SmartBlocks);
                 base.current_view.setSubapp(subapp);
             },
-            checkForNotifications: function () {
+            checkForNotifications:function () {
                 var base = this;
                 base.task_users.fetch({
-                    success: function () {
+                    success:function () {
                         if (base.task_users.models.length > 0) {
 
                         }
                     }
                 });
             },
-            launchObjectives: function () {
+            launchObjectives:function () {
                 var base = this;
+                console.log("launchObjectives");
                 base.setContent("Objectives views");
             }
         });
