@@ -71,7 +71,8 @@
                 "activities/:id/:subpage" : "activity_show",
                 "planning": "planning",
                 "objectives": "objectives"
-            }
+            },
+            "restricted_to": "user"
         }
     ]
 }

@@ -5,28 +5,16 @@ namespace Organization;
 
 class TasksController extends \Controller
 {
-    public function security_check()
-    {
-        if (!\User::logged_in())
-        {
-            $this->redirect("/Meetings/Schemas/error");
-        }
-    }
-
-    public function security_check_token($token)
-    {
-        $users = \User::where(array("token" => $token));
-        if ($users != null && count($users) == 0)
-        {
-            $this->redirect("Meetings/Schemas/error");
-        }
-    }
-
     public function error()
     {
         $this->render = false;
         header("Content-Type: application/json");
         echo json_encode(array("status" => "error", "message" => "You are not logged in"));
+    }
+
+    public function before_filter()
+    {
+        \User::restrict();
     }
 
     public function index()
