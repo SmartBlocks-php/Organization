@@ -19,16 +19,10 @@ define([
             var base = this;
             base.SmartBlocks = SmartBlocks;
 
-            base.tasks_all = new TasksCollection();
-
-            base.tasks_all.fetch({
-                success: function () {
-
-                    base.render();
-                    base.update();
-                    base.registerEvents();
-                }
-            });
+            base.tasks_all = SmartBlocks.Blocks.Organization.Data.tasks;
+            base.render();
+            base.update();
+            base.registerEvents();
 
 
         },
@@ -70,11 +64,7 @@ define([
         registerEvents: function () {
             var base = this;
             base.events.on("updated_planned_task", function (planned_task) {
-                base.tasks_all.fetch({
-                    success: function () {
-                        base.update();
-                    }
-                });
+                base.update();
             });
 
 

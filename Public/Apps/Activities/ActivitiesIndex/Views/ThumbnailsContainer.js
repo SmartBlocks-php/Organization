@@ -13,7 +13,7 @@ define([
 
             base.activities = activities;
         },
-        init: function (SmartBlocks) {
+        init: function () {
             var base = this;
             base.SmartBlocks = SmartBlocks;
             base.width = 0;
@@ -33,6 +33,7 @@ define([
             var div = $(document.createElement('div'));
             div.addClass("thumbnail_subcontainer");
             var vert_count = Math.floor(base.$el.parent().height() / base.height);
+
             var current = -1;
             var subcontainers_count = 1;
             for (var k in base.activities.models) {

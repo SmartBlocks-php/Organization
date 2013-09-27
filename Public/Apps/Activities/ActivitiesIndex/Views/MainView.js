@@ -12,25 +12,20 @@ define([
         className: "activities_index_view",
         initialize: function () {
             var base = this;
-            base.$el.addClass("loading");
-            base.activities = SmartBlocks.Blocks.Organization.Data.activities;
+//            base.$el.addClass("loading");
+            base.activities =  SmartBlocks.Blocks.Organization.Data.activities;
             base.moving = false;
             base.moving_timer = 0;
         },
-        init: function (SmartBlocks) {
+        init: function () {
             var base = this;
 
             base.SmartBlocks = SmartBlocks;
 
-            base.activity_types = new ActivityTypesCollection();
+            base.activity_types = SmartBlocks.Blocks.Organization.Data.activity_types;
             base.pos = 0;
-            base.activity_types.fetch({
-                success: function () {
-                    base.render();
-                    base.registerEvents();
-
-                }
-            });
+            base.render();
+            base.registerEvents();
 
 
         },
@@ -44,7 +39,7 @@ define([
 
             var task_thumbnails_container = new ThumbnailsContainerView(base.activities);
             base.$el.find(".thumbnails_container").html(task_thumbnails_container.$el);
-            task_thumbnails_container.init(base.SmartBlocks);
+            task_thumbnails_container.init();
             base.tt_container = task_thumbnails_container;
             base.filterActivities();
 
@@ -128,22 +123,11 @@ define([
         filterActivities: function () {
             var base = this;
 
-            base.$el.addClass("loading");
-            base.activities.fetch({
-                data: {
-                    "name": base.$el.find(".name_filter").val(),
-                    "archives": base.$el.find(".archived_filter").is(":checked") ? "1" : undefined,
-                    "type": base.$el.find(".types_filter").val()
-                },
-                success: function () {
+            base.activities =  SmartBlocks.Blocks.Organization.Data.activities;
 
-                    base.$el.removeClass("loading");
-                    base.$el.find(".found_count_nb").html(base.activities.models.length);
-                    base.tt_container.render();
-
-
-                }
-            });
+//            base.activities = new SmartBlocks.Blocks.Organization.Collections.Activities(base.activities);
+            base.$el.find(".found_count_nb").html(base.activities.models.length);
+            base.tt_container.render();
         },
         addFilterWord: function (word) {
             var base = this;
