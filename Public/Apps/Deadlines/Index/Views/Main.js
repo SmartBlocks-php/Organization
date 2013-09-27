@@ -44,6 +44,9 @@ define([
             new_ddl_view.init(base.SmartBlocks, {
                 activity: base.activity
             });
+            new_ddl_view.events.on("deadline_created", function () {
+                base.render();
+            });
 
             for (var k in base.deadlines.models) {
                 var deadline_view = new DeadlineShow(base.deadlines.models[k]);

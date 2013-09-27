@@ -10,9 +10,11 @@ define([
         className: "deadline_show_container new",
         initialize: function () {
             var base = this;
+
         },
         init: function (SmartBlocks, params) {
             var base = this;
+            base.events = $.extend({}, Backbone.Events);
             base.SmartBlocks = SmartBlocks;
             if (params)
                 base.activity = params.activity;
@@ -23,7 +25,9 @@ define([
             var base = this;
 
             var template = _.template(new_ddl_tpl, {
-                now: new Date()
+                now: new Date(),
+                get_activity: base.activity === undefined,
+                activities: SmartBlocks.Blocks.Organization.Data.activities
             });
             base.$el.html(template);
 
@@ -78,13 +82,16 @@ define([
 
                     if (base.activity) {
                         deadline.set("activity", base.activity);
+                    } else {
+                        deadline.set("activity", SmartBlocks.Blocks.Organization.Data.activities.get(base.$el.find('.activity_input').val()));
                     }
 
                     deadline.set("tasks", new SmartBlocks.Blocks.Organization.Collections.Tasks());
                     deadline.save();
+
                     SmartBlocks.Blocks.Organization.Data.deadlines.add(deadline);
 
-
+                    base.events.trigger("deadline_created");
                     base.retract();
 
                 }

@@ -10,6 +10,19 @@
                 <label for="deadline_name_input">Name</label>
                 <input name="name" type="text" class="deadline_name_input" id="deadline_name_input"
                        placeholder="Enter a name here"/>
+
+            </div>
+            <div class="pure-control-group">
+                <% if (get_activity) { %>
+                <label>
+                    Activity
+                </label>
+                <select class="activity_input">
+                    <% for (var k in activities.models) { %>
+                        <option value="<%= activities.models[k].get('id') %>"><%= activities.models[k].get('name') %></option>
+                    <% } %>
+                </select>
+                <% } %>
             </div>
         </fieldset>
         <fieldset>

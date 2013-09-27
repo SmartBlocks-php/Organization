@@ -19,15 +19,8 @@ class TasksController extends \Controller
 
     public function index()
     {
-        if (isset($_GET["token"]) && $_GET["token"] != "")
-            $this->security_check_token($_GET["token"]);
-        else
-            $this->security_check();
-
         $em = \Model::getEntityManager();
-
         $qb = $em->createQueryBuilder();
-
         if (\User::current_user() != null)
             $qb->select("t")
                 ->from("\\Organization\\Task", "t")
@@ -38,20 +31,6 @@ class TasksController extends \Controller
                 ->andWhere("t.parent is NULL")
                 ->setParameter("user", \User::current_user())
                 ->orderBy("t.due_date");
-        else
-        {
-            $users = \User::where(array("token" => $_GET["token"]));
-            $user = $users[0];
-            $qb->select("t")
-                ->from("\\Organization\\Task", "t")
-                ->leftJoin("t.linked_users", "tu")
-                ->leftJoin("t.tags", "ta")
-                ->where("t.owner = :user OR (tu.user = :user)")
-                ->andWhere("t.active = true")
-                ->andWhere("t.parent is NULL")
-                ->setParameter("user", $user)
-                ->orderBy("t.due_date");
-        }
 
         $data = $this->getRequestData();
         if (isset($data["date"]))
@@ -162,11 +141,6 @@ class TasksController extends \Controller
 
     public function create()
     {
-        if (isset($_GET["token"]) && $_GET["token"] != "")
-            $this->security_check_token($_GET["token"]);
-        else
-            $this->security_check();
-
         $data = $this->getRequestData();
 
         $task = new Task;
@@ -285,11 +259,6 @@ class TasksController extends \Controller
 
     public function show($params = array())
     {
-        if (isset($_GET["token"]) && $_GET["token"] != "")
-            $this->security_check_token($_GET["token"]);
-        else
-            $this->security_check();
-
         $task = Task::find($params["id"]);
         $this->render = false;
         header("Content-Type: application/json");
