@@ -27,10 +27,18 @@ define([
 
             var template = _.template(tasks_template, {});
             base.$el.html(template);
+
+
             base.renderPage(1);
         },
         renderPage: function (page) {
             var base = this;
+            if (base.$el.height() > 0) {
+                var psize = Math.floor(base.$el.height() * base.$el.width() / 49300);
+                if (psize > 0) {
+                    base.page_size = psize;
+                }
+            }
             var tasks = base.deadline.getTasks();
 
             base.page_count = Math.ceil(tasks.models.length / base.page_size);
