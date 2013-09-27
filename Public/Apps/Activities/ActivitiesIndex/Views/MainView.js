@@ -12,8 +12,7 @@ define([
         className: "activities_index_view",
         initialize: function () {
             var base = this;
-//            base.$el.addClass("loading");
-            base.activities =  SmartBlocks.Blocks.Organization.Data.activities;
+            base.activities = SmartBlocks.Blocks.Organization.Data.activities;
             base.moving = false;
             base.moving_timer = 0;
         },
@@ -39,7 +38,7 @@ define([
 
             var task_thumbnails_container = new ThumbnailsContainerView(base.activities);
             base.$el.find(".thumbnails_container").html(task_thumbnails_container.$el);
-            task_thumbnails_container.init();
+            task_thumbnails_container.init(base.SmartBlocks);
             base.tt_container = task_thumbnails_container;
             base.filterActivities();
 
@@ -123,9 +122,18 @@ define([
         filterActivities: function () {
             var base = this;
 
-            base.activities =  SmartBlocks.Blocks.Organization.Data.activities;
+            base.activities =  SmartBlocks.Blocks.Organization.Data.activities.filter(function (activity) {
+                var name = activity.get('name');
+                var type = base.activity_types.get(base.$el.find(".types_filter").val());
+                var filter = name.indexOf(base.$el.find(".name_filter").val()) === 0 &&
+                    (!activity.get("archived") || base.$el.find(".archived_filter").is(":checked")) &&
+                    (!type || activity.get('type').get('id') === type.get('id'));
+                console.log(name, filter);
+                return filter;
+            });
 
-//            base.activities = new SmartBlocks.Blocks.Organization.Collections.Activities(base.activities);
+            base.activities = new SmartBlocks.Blocks.Organization.Collections.Activities(base.activities);
+            base.tt_container.activities = base.activities;
             base.$el.find(".found_count_nb").html(base.activities.models.length);
             base.tt_container.render();
         },
