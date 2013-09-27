@@ -34,9 +34,7 @@ define([
             });
 
 
-
             base.$el.html(template);
-
 
 
             $("body").prepend(base.$el);
@@ -44,12 +42,15 @@ define([
 
             var value = base.$el.find('.activity').val();
             var activity = SmartBlocks.Blocks.Organization.Data.activities.get(value);
-            console.log("ACTIVITY",value,  activity);
+            console.log("ACTIVITY", value, activity);
             if (activity) {
                 var template = _.template(task_chooser_tpl, {
-                    deadlines: activity.getDeadlines()
+                    deadlines: activity.getDeadlines(),
+                    pt: base.planned_task
                 });
                 base.$el.find('.task_input').html(template);
+            } else {
+                base.$el.find('.task_input').html('<option value="0">None</option>');
             }
         },
         scroll: function (e) {
@@ -80,14 +81,17 @@ define([
 
             });
 
-            base.$el.delegate('.activity', 'change', function  () {
+            base.$el.delegate('.activity', 'change', function () {
                 var value = $(this).val();
                 var activity = SmartBlocks.Blocks.Organization.Data.activities.get(value);
                 if (activity) {
                     var template = _.template(task_chooser_tpl, {
-                        deadlines: activity.getDeadlines()
+                        deadlines: activity.getDeadlines(),
+                        pt: base.planned_task
                     });
                     base.$el.find('.task_input').html(template);
+                } else {
+                    base.$el.find('.task_input').html('<option value="0">None</option>');
                 }
             });
 

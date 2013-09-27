@@ -7,8 +7,11 @@
     <div class="pure-control-group">
         <label for="pt_activity_chooser">Task</label>
         <select id="pt_activity_chooser" class="activity">
+            <option value="0">
+                None
+            </option>
             <% for (var k in activities.models) {%>
-            <option value="<%= activities.models[k].get('id') %>">
+            <option <% if (planned_task.get('task') && planned_task.get('task').get('activity').id ==  activities.models[k].get('id')) {%>selected="true"<% } %> value="<%= activities.models[k].get('id') %>">
                 <%= activities.models[k].get('name') %>
             </option>
             <% } %>

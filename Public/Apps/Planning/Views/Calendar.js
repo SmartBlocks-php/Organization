@@ -23,7 +23,7 @@ define([
             base.render();
             base.registerEvents();
 
-
+            base.selected_event = undefined;
         },
         render: function () {
             var base = this;
@@ -138,21 +138,11 @@ define([
                 },
                 eventClick: function (event, e) {
                     var elt = $(this);
-                    $(".planned_task_popup").remove();
-                    var planned_task = base.planned_tasks.get(event.id);
-                    if (planned_task) {
-                        var popup = new PlannedTaskPopup(planned_task);
-                        popup.init(base.SmartBlocks, e, event);
 
-                        popup.events.on("deleted", function () {
-                            base.$el.fullCalendar('removeEvents', event.id)
-                            base.parent.events.trigger("updated_planned_task");
-                        });
-                        popup.events.on("saved", function (event) {
-                            base.$el.fullCalendar('updateEvent', event)
-                            base.parent.events.trigger("updated_planned_task");
-                        });
-                    }
+                    base.$el.find(".selected_event").removeClass("selected_event");
+                    elt.addClass("selected_event");
+                    console.log(event, elt.attr("class"));
+                    base.selected_pt = SmartBlocks.Blocks.Organization.Data.planned_tasks.get(event.id);
                 },
                 dayClick: function(date, allDay, jsEvent, view) { // Creation of events on click
 
@@ -175,6 +165,29 @@ define([
                                 color: "gray"
                             };
                             base.$el.fullCalendar('renderEvent', newEvent);
+                        }
+                    });
+                },
+                eventRender: function (event, element) {
+                    var elt = $(element);
+                    elt.addClass("planned_task_evt_" + event.id);
+                    elt.attr("data-id", event.id);
+                    elt.dblclick(function (e) {
+                        var elt = $(this);
+                        var planned_task = SmartBlocks.Blocks.Organization.Data.planned_tasks.get(elt.attr('data-id'));
+                        $(".planned_task_popup").remove();
+                        if (planned_task) {
+                            var popup = new PlannedTaskPopup(planned_task);
+                            popup.init(base.SmartBlocks, e, event);
+
+                            popup.events.on("deleted", function () {
+                                base.$el.fullCalendar('removeEvents', event.id)
+                                base.parent.events.trigger("updated_planned_task");
+                            });
+                            popup.events.on("saved", function (event) {
+                                base.$el.fullCalendar('updateEvent', event)
+                                base.parent.events.trigger("updated_planned_task");
+                            });
                         }
                     });
                 }
@@ -203,6 +216,22 @@ define([
                 };
                 base.$el.fullCalendar('renderEvent', newEvent);
             });
+
+            SmartBlocks.Shortcuts.add([
+                46
+            ], function () {
+                if (base.$el.height() > 0) {
+                    if (base.selected_pt) {
+                        var id = base.selected_pt.get('id');
+                        base.$el.fullCalendar( 'removeEvents', [id] );
+                        base.selected_pt.destroy({
+                            success: function () {
+                                SmartBlocks.basics.show_message("Successfully deleted event");
+                            }
+                        });
+                    }
+                }
+            }, "#Organization/planning");
 
         }
     });
