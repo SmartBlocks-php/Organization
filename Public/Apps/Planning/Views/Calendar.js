@@ -31,7 +31,6 @@ define([
             var now = new Date();
             now.setHours(10);
             var end = new Date();
-
             end.setHours(11);
 
             base.events = [];
@@ -41,7 +40,6 @@ define([
                 var end = new Date(start);
                 var duration = parseInt(planned_task.get("duration"));
                 end.setTime(end.getTime() + duration);
-//                console.log(planned_task.get("task").get("activity"));
                 var event = {
                     title: planned_task.get("content") ? planned_task.get("content") : "Untitled",
                     start: start,
@@ -49,7 +47,7 @@ define([
                     allDay: false,
                     id: planned_task.get("id"),
                     className: "planned_task_cal",
-                    color: (planned_task.get("task").get("activity") != null) ? planned_task.get("task").get("activity").type.color : "gray"
+                    color:  "gray"
                 };
                 base.events.push(event);
             }
@@ -60,6 +58,7 @@ define([
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
+                height: 650,
                 editable: true,
                 droppable: true,
                 events: base.events,
@@ -99,7 +98,7 @@ define([
                     planned_task.save({}, {
                         success: function () {
                             copiedEventObject.id = planned_task.get("id");
-                            copiedEventObject.color = (task.get("activity") != null) ? task.get("activity").type.color : "gray";
+                            copiedEventObject.color = "gray";
                             base.$el.fullCalendar('renderEvent', copiedEventObject);
                             base.planned_tasks.add(planned_task);
                             base.parent.events.trigger("updated_planned_task", planned_task);
@@ -154,7 +153,30 @@ define([
                             base.parent.events.trigger("updated_planned_task");
                         });
                     }
+                },
+                dayClick: function(date, allDay, jsEvent, view) { // Creation of events on click
 
+                    var end = new Date(date);
+                    end.setHours(date.getHours() + 1);
+                    var planned_task = new SmartBlocks.Blocks.Organization.Models.PlannedTask();
+                    planned_task.setStart(date);
+                    planned_task.set("duration", 3600000);
+                    planned_task.set("content", "New event");
+                    planned_task.save({}, {
+                        success: function () {
+                            SmartBlocks.Blocks.Organization.Data.planned_tasks.add(planned_task);
+                            var newEvent = {
+                                title: planned_task.get('content'),
+                                start: date,
+                                id: planned_task.get("id"),
+                                allDay: allDay,
+                                end: end,
+                                className: "planned_task_cal",
+                                color: "gray"
+                            };
+                            base.$el.fullCalendar('renderEvent', newEvent);
+                        }
+                    });
                 }
             });
         },
@@ -166,9 +188,20 @@ define([
 
             });
 
-            base.planned_tasks.on("change", function () {
-                console.log("stuff was changed in some planned task");
-                base.render();
+            base.planned_tasks.on("change", function (model) {
+                console.log(model, "stuff was changed in some planned task");
+                base.$el.fullCalendar( 'removeEvents', [model.get('id')] );
+
+                var newEvent = {
+                    title: model.get('content'),
+                    start: model.getStart(),
+                    id: model.get("id"),
+                    allDay: false,
+                    end: model.getEnd(),
+                    className: "planned_task_cal",
+                    color: "gray"
+                };
+                base.$el.fullCalendar('renderEvent', newEvent);
             });
 
         }
