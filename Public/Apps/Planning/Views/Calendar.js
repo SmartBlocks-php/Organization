@@ -46,7 +46,7 @@ define([
                     end: end,
                     allDay: false,
                     id: planned_task.get("id"),
-                    className: "planned_task_cal",
+                    className: "planned_task_cal pt_event" + planned_task.get('id'),
                     color:  "gray"
                 };
                 base.events.push(event);
@@ -84,7 +84,7 @@ define([
                     console.log(end);
                     copiedEventObject.allDay = false;
                     copiedEventObject.editable = true;
-                    copiedEventObject.className = "planned_task_cal";
+
                     // render the event on the calendar
                     // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
 
@@ -99,6 +99,7 @@ define([
                         success: function () {
                             copiedEventObject.id = planned_task.get("id");
                             copiedEventObject.color = "gray";
+                            copiedEventObject.className = "planned_task_cal pt_event" + planned_task.get('id');
                             base.$el.fullCalendar('renderEvent', copiedEventObject);
                             base.planned_tasks.add(planned_task);
                             base.parent.events.trigger("updated_planned_task", planned_task);
@@ -161,7 +162,7 @@ define([
                                 id: planned_task.get("id"),
                                 allDay: allDay,
                                 end: end,
-                                className: "planned_task_cal",
+                                className: "planned_task_cal pt_event" + planned_task.get('id'),
                                 color: "gray"
                             };
                             base.$el.fullCalendar('renderEvent', newEvent);
@@ -203,18 +204,13 @@ define([
 
             base.planned_tasks.on("change", function (model) {
                 console.log(model, "stuff was changed in some planned task");
-                base.$el.fullCalendar( 'removeEvents', [model.get('id')] );
-
-                var newEvent = {
-                    title: model.get('content'),
-                    start: model.getStart(),
-                    id: model.get("id"),
-                    allDay: false,
-                    end: model.getEnd(),
-                    className: "planned_task_cal",
-                    color: "gray"
-                };
-                base.$el.fullCalendar('renderEvent', newEvent);
+                base.updateEvent(model);
+                if (base.selected_pt) {
+                    if (base.$el.find(".selected_event").length > 1) {
+                        base.$el.find(".selected_event").removeClass("selected_event");
+                    }
+                    base.$el.find(".pt_event" + model.get('id')).addClass("selected_event");
+                }
             });
 
             SmartBlocks.Shortcuts.add([
@@ -232,6 +228,126 @@ define([
                     }
                 }
             }, "#Organization/planning");
+
+            var move_timer = 0;
+                SmartBlocks.Shortcuts.add([
+                37
+            ], function () {
+                if (base.$el.height() > 0) {
+
+                    if (base.selected_pt) {
+                        var date = base.selected_pt.getStart();
+                        date.setHours(date.getHours() - 24);
+                        base.selected_pt.setStart(date);
+
+                        clearTimeout(move_timer);
+                        move_timer = setTimeout(function () {
+                            console.log("saved");
+                            base.selected_pt.save();
+                        }, 250);
+
+                    }
+                }
+            }, "#Organization/planning");
+
+            SmartBlocks.Shortcuts.add([
+                39
+            ], function () {
+                if (base.$el.height() > 0) {
+                    if (base.selected_pt) {
+                        var date = base.selected_pt.getStart();
+                        date.setHours(date.getHours() + 24);
+                        base.selected_pt.setStart(date);
+                        clearTimeout(move_timer);
+                        move_timer = setTimeout(function () {
+                            console.log("saved");
+                            base.selected_pt.save();
+                        }, 500);
+                    }
+                }
+            }, "#Organization/planning");
+
+            SmartBlocks.Shortcuts.add([
+                38
+            ], function () {
+                if (base.$el.height() > 0) {
+                    if (base.selected_pt) {
+                        var date = base.selected_pt.getStart();
+                        date.setMinutes(date.getMinutes() - 30);
+                        base.selected_pt.setStart(date);
+                        clearTimeout(move_timer);
+                        move_timer = setTimeout(function () {
+                            console.log("saved");
+                            base.selected_pt.save();
+                        }, 500);
+                    }
+                }
+            }, "#Organization/planning");
+
+            SmartBlocks.Shortcuts.add([
+                40
+            ], function () {
+                if (base.$el.height() > 0) {
+                    if (base.selected_pt) {
+                        var date = base.selected_pt.getStart();
+                        date.setMinutes(date.getMinutes() + 30);
+                        base.selected_pt.setStart(date);
+                        clearTimeout(move_timer);
+                        move_timer = setTimeout(function () {
+                            console.log("saved");
+                            base.selected_pt.save();
+                        }, 500);
+                    }
+                }
+            }, "#Organization/planning");
+
+            //Duration shortcut
+            SmartBlocks.Shortcuts.add([
+                16, 40
+            ], function () {
+                if (base.$el.height() > 0) {
+                    if (base.selected_pt) {
+                        base.selected_pt.set("duration", base.selected_pt.get("duration") + 30 * 60 * 1000);
+                        clearTimeout(move_timer);
+                        move_timer = setTimeout(function () {
+                            base.selected_pt.save();
+                        }, 500);
+                    }
+                }
+            }, "#Organization/planning");
+
+            SmartBlocks.Shortcuts.add([
+                16, 38
+            ], function () {
+                if (base.$el.height() > 0) {
+                    if (base.selected_pt) {
+                        base.selected_pt.set("duration", base.selected_pt.get("duration") - 30 * 60 * 1000);
+                        clearTimeout(move_timer);
+                        move_timer = setTimeout(function () {
+                            console.log("saved");
+                            base.selected_pt.save();
+                        }, 500);
+                    }
+                }
+            }, "#Organization/planning");
+
+        },
+        updateEvent: function (model) {
+            var base = this;
+            var base = this;
+            base.$el.fullCalendar( 'removeEvents', [model.get('id')] );
+
+            var newEvent = {
+                title: model.get('content'),
+                start: model.getStart(),
+                id: model.get("id"),
+                allDay: false,
+                end: model.getEnd(),
+                color: "gray",
+                className: "planned_task_cal pt_event" + model.get('id')
+            };
+            base.$el.fullCalendar('renderEvent', newEvent);
+
 
         }
     });
