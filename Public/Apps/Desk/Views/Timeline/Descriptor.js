@@ -3,13 +3,14 @@ define([
     'underscore',
     'backbone',
     'text!../../Templates/Timeline/descriptor.html',
+    'text!../../Templates/Timeline/notask_descriptor.html',
     'Organization/Apps/Tasks/NormalThumbnail/Views/Main',
     'text!../../Templates/Timeline/current_event_timing.html',
     'text!../../Templates/Timeline/future_event_timing.html',
     './DeadlineLine',
     './ActivityBox',
     'Organization/Apps/Recap/Views/Clock'
-], function ($, _, Backbone, descriptor_tpl, NormalThumbnailView, current_event_tpl, future_event_tpl, DeadlineLineView, ActivityBoxView, Clock) {
+], function ($, _, Backbone, descriptor_tpl, notask_descriptor, NormalThumbnailView, current_event_tpl, future_event_tpl, DeadlineLineView, ActivityBoxView, Clock) {
     var View = Backbone.View.extend({
         tagName: "div",
         className: "descriptor",
@@ -22,9 +23,12 @@ define([
             var base = this;
             base.SmartBlocks = SmartBlocks;
 
-            base.task = SmartBlocks.Blocks.Organization.Data.tasks.get(base.planned_task.get('task').get('id'));
-            base.deadline = SmartBlocks.Blocks.Organization.Data.deadlines.get(base.task.get('deadline').get('id'));
-            base.activity = SmartBlocks.Blocks.Organization.Data.activities.get(base.task.get('activity').id);
+            if (base.planned_task.get('task')) {
+                base.task = SmartBlocks.Blocks.Organization.Data.tasks.get(base.planned_task.get('task').get('id'));
+                base.deadline = SmartBlocks.Blocks.Organization.Data.deadlines.get(base.task.get('deadline').get('id'));
+                base.activity = SmartBlocks.Blocks.Organization.Data.activities.get(base.task.get('activity').id);
+            }
+
 
             base.render();
 
@@ -32,24 +36,32 @@ define([
         render: function () {
             var base = this;
 
-            var template = _.template(descriptor_tpl, {});
-            base.$el.html(template);
+            if (base.task) {
+                var template = _.template(descriptor_tpl, {});
+                base.$el.html(template);
 
-            var task_thumbnail = new NormalThumbnailView(base.task);
-            base.$el.find(".task_thb_container").html(task_thumbnail.$el);
-            task_thumbnail.init(base.SmartBlocks);
+                var task_thumbnail = new NormalThumbnailView(base.task);
+                base.$el.find(".task_thb_container").html(task_thumbnail.$el);
+                task_thumbnail.init(base.SmartBlocks);
 
-            var deadline_line_view = new DeadlineLineView(base.deadline);
-            base.$el.find(".deadline_line_container").html(deadline_line_view.$el);
-            deadline_line_view.init(base.SmartBlocks);
+                var deadline_line_view = new DeadlineLineView(base.deadline);
+                base.$el.find(".deadline_line_container").html(deadline_line_view.$el);
+                deadline_line_view.init(base.SmartBlocks);
 
-            var activity_box_view = new ActivityBoxView(base.activity);
-            base.$el.find(".activity_box_container").html(activity_box_view.$el);
-            activity_box_view.init(base.SmartBlocks);
+                var activity_box_view = new ActivityBoxView(base.activity);
+                base.$el.find(".activity_box_container").html(activity_box_view.$el);
+                activity_box_view.init(base.SmartBlocks);
 
-            var clock_view = new Clock();
-            base.$el.find(".clock_container").html(clock_view.$el);
-            clock_view.init(base.SmartBlocks, SmartBlocks.Blocks.Organization.Data.planned_tasks);
+                var clock_view = new Clock();
+                base.$el.find(".clock_container").html(clock_view.$el);
+                clock_view.init(base.SmartBlocks, SmartBlocks.Blocks.Organization.Data.planned_tasks);
+            } else {
+                var template = _.template(notask_descriptor, {
+                    planned_task: base.planned_task
+                });
+                base.$el.html(template);
+            }
+
 
 
             base.update();
@@ -62,54 +74,59 @@ define([
         update: function () {
             var base = this;
 
-            var now = new Date();
-            if (base.planned_task.getStart() < now && base.planned_task.getEnd() > now) {
-                var end_time = base.planned_task.getEnd();
-                var time = (end_time.getHours() < 10 ? '0' : '') + end_time.getHours() + ":" +
-                    (end_time.getMinutes() < 10 ? '0' : '') + end_time.getMinutes();
+            if (base.task) {
+                var now = new Date();
+                if (base.planned_task.getStart() < now && base.planned_task.getEnd() > now) {
+                    var end_time = base.planned_task.getEnd();
+                    var time = (end_time.getHours() < 10 ? '0' : '') + end_time.getHours() + ":" +
+                        (end_time.getMinutes() < 10 ? '0' : '') + end_time.getMinutes();
 
 
-                var timing_tpl = _.template(current_event_tpl, {
-                    end_time: time,
-                    worked_time: SmartBlocks.Blocks.Organization.common.getTimeString(now.getTime() - base.planned_task.getStart().getTime()),
-                    time_to_end: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.getEnd().getTime() - now.getTime()),
-                    total_task_worked_time: SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done)
-                });
+                    var timing_tpl = _.template(current_event_tpl, {
+                        end_time: time,
+                        worked_time: SmartBlocks.Blocks.Organization.common.getTimeString(now.getTime() - base.planned_task.getStart().getTime()),
+                        time_to_end: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.getEnd().getTime() - now.getTime()),
+                        total_task_worked_time: SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done)
+                    });
 
-                base.$el.find(".timing_container").html(timing_tpl);
-            } else if (base.planned_task.getStart() > now) {
-                var end_time = base.planned_task.getEnd();
-                var start_time = base.planned_task.getStart();
-                var etime = (end_time.getHours() < 10 ? '0' : '') + end_time.getHours() + ":" +
-                    (end_time.getMinutes() < 10 ? '0' : '') + end_time.getMinutes();
-                var stime = (start_time.getHours() < 10 ? '0' : '') + start_time.getHours() + ":" +
-                    (start_time.getMinutes() < 10 ? '0' : '') + start_time.getMinutes();
-
-
-                var timing_tpl = _.template(future_event_tpl, {
-                    end_time: etime,
-                    start_time: stime,
-                    duration: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.get('duration')),
-                    total_task_worked_time: base.task.getWork().done ? SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done) : '-'
-                });
-
-                base.$el.find(".timing_container").html(timing_tpl);
-            } else if (base.planned_task.getStop() < now) {
-                var end_time = base.planned_task.getEnd();
-                var start_time = base.planned_task.getStart();
-                var etime = (end_time.getHours() < 10 ? '0' : '') + end_time.getHours() + ":" +
-                    (end_time.getMinutes() < 10 ? '0' : '') + end_time.getMinutes();
-                var stime = (start_time.getHours() < 10 ? '0' : '') + start_time.getHours() + ":" +
-                    (start_time.getMinutes() < 10 ? '0' : '') + start_time.getMinutes();
+                    base.$el.find(".timing_container").html(timing_tpl);
+                } else if (base.planned_task.getStart() > now) {
+                    var end_time = base.planned_task.getEnd();
+                    var start_time = base.planned_task.getStart();
+                    var etime = (end_time.getHours() < 10 ? '0' : '') + end_time.getHours() + ":" +
+                        (end_time.getMinutes() < 10 ? '0' : '') + end_time.getMinutes();
+                    var stime = (start_time.getHours() < 10 ? '0' : '') + start_time.getHours() + ":" +
+                        (start_time.getMinutes() < 10 ? '0' : '') + start_time.getMinutes();
 
 
-                var timing_tpl = _.template(future_event_tpl, {
-                    end_time: etime,
-                    start_time: stime,
-                    duration: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.get('duration')),
-                    total_task_worked_time: base.task.getWork().done ? SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done) : '-'
-                });
+                    var timing_tpl = _.template(future_event_tpl, {
+                        end_time: etime,
+                        start_time: stime,
+                        duration: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.get('duration')),
+                        total_task_worked_time: base.task.getWork().done ? SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done) : '-'
+                    });
+
+                    base.$el.find(".timing_container").html(timing_tpl);
+                } else if (base.planned_task.getStop() < now) {
+                    var end_time = base.planned_task.getEnd();
+                    var start_time = base.planned_task.getStart();
+                    var etime = (end_time.getHours() < 10 ? '0' : '') + end_time.getHours() + ":" +
+                        (end_time.getMinutes() < 10 ? '0' : '') + end_time.getMinutes();
+                    var stime = (start_time.getHours() < 10 ? '0' : '') + start_time.getHours() + ":" +
+                        (start_time.getMinutes() < 10 ? '0' : '') + start_time.getMinutes();
+
+
+                    var timing_tpl = _.template(future_event_tpl, {
+                        end_time: etime,
+                        start_time: stime,
+                        duration: SmartBlocks.Blocks.Organization.common.getTimeString(base.planned_task.get('duration')),
+                        total_task_worked_time: base.task.getWork().done ? SmartBlocks.Blocks.Organization.common.getTimeString(base.task.getWork().done) : '-'
+                    });
+                }
+            } else {
+
             }
+
         },
         registerEvents: function () {
             var base = this;

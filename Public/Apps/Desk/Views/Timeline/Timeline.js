@@ -43,7 +43,7 @@ define([
                     allDay: false,
                     id: planned_task.get("id"),
                     className: "planned_task_cal",
-                    color: (planned_task.get("task").get("activity") != null) ? planned_task.get("task").get("activity").type.color : "gray"
+                    color: "gray"
                 };
                 base.events.push(event);
             }
@@ -95,8 +95,8 @@ define([
                     planned_task.save({}, {
                         success: function () {
                             copiedEventObject.id = planned_task.get("id");
-                            copiedEventObject.color = (task.get("activity") != null) ? task.get("activity").type.color : "gray";
-                            base.$el.fullCalendar('renderEvent', copiedEventObject);
+                            copiedEventObject.color = "gray";
+                            base.$el.find(".calendar_container").fullCalendar('renderEvent', copiedEventObject);
                             base.planned_tasks.add(planned_task);
                             base.parent.events.trigger("updated_planned_task", planned_task);
                         }
