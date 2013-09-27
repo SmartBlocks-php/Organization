@@ -19,7 +19,7 @@ define([
 
 
 
-            base.activity_types = new SmartBlocks.Blocks.Organization.Collections.ActivityTypes();
+            base.activity_types = SmartBlocks.Blocks.Organization.Data.activity_types;
             base.render();
             base.registerEvents();
 

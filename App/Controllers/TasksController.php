@@ -17,6 +17,19 @@ class TasksController extends \Controller
         \User::restrict();
     }
 
+    public function security_check($task)
+    {
+        if ($task->getOwner()->getId() == \User::current_user()->getId())
+        {
+            return true;
+        }
+        else
+        {
+            Router::redirect("/Users/unauthorized");
+            return false;
+        }
+    }
+
     public function index()
     {
         $em = \Model::getEntityManager();
@@ -274,135 +287,132 @@ class TasksController extends \Controller
 
     public function update($params = array())
     {
-        if (isset($_GET["token"]) && $_GET["token"] != "")
-            $this->security_check_token($_GET["token"]);
-        else
-            $this->security_check();
-
         $task = Task::find($params["id"]);
-        $this->render = false;
-        header("Content-Type: application/json");
-        if (is_object($task))
+        if ($this->security_check($task))
         {
-            $data = $this->getRequestData();
-            $task->setName($data["name"]);
-            $task->setDescription(isset($data["description"]) ? $data["description"] : "");
-            $task->setCompletionDate($data["completion_date"]);
-            $task->setOrderIndex($data["order_index"]);
-            if (isset($data["required_time"]))
+            $this->render = false;
+            header("Content-Type: application/json");
+            if (is_object($task))
             {
-                $task->setRequiredTime($data["required_time"]);
-            }
+                $data = $this->getRequestData();
+                $task->setName($data["name"]);
+                $task->setDescription(isset($data["description"]) ? $data["description"] : "");
+                $task->setCompletionDate($data["completion_date"]);
+                $task->setOrderIndex($data["order_index"]);
+                if (isset($data["required_time"]))
+                {
+                    $task->setRequiredTime($data["required_time"]);
+                }
 
-            if (isset($data["due_date"]))
-            {
-                $due_date = new \DateTime();
-                $due_date->setTimestamp($data["due_date"]);
-                $task->setDueDate($due_date);
+                if (isset($data["due_date"]))
+                {
+                    $due_date = new \DateTime();
+                    $due_date->setTimestamp($data["due_date"]);
+                    $task->setDueDate($due_date);
+                }
+                else
+                {
+                    $task->setDueDate(null);
+                }
+
+                if (isset($data["parent"]))
+                {
+                    $parent = Task::find($data["parent"]["id"]);
+                    if (is_object($parent))
+                    {
+                        $task->setParent($parent);
+                    }
+                }
+
+
+                if (isset($data["tags"]))
+                {
+                    $task->getTags()->clear();
+
+                    foreach ($data["tags"] as $tag_a)
+                    {
+                        $tag = TaskTag::find($tag_a["id"]);
+                        if (is_object($tag))
+                        {
+                            $task->getTags()->add($tag);
+                        }
+                    }
+                }
+
+                if (isset($data["creation_date"]))
+                {
+                    $task->setCreationDate($data["creation_date"]);
+                }
+
+                if (isset($data["active"]))
+                {
+                    $task->setActive($data["active"]);
+                }
+
+                if (isset($data['deadline']))
+                {
+                    $deadline = Deadline::find($data['deadline']);
+                    if (is_object($deadline))
+                    {
+                        $task->setDeadline($deadline);
+                    }
+                }
+
+                $em = \Model::getEntityManager();
+                if (isset($data["children"]))
+                {
+
+                    foreach ($task->getChildren() as $child)
+                    {
+                        $child->setParent(null);
+                        $em->persist($child);
+                    }
+
+
+                    foreach ($data["children"] as $child_a)
+                    {
+                        $child = Task::find($child_a["id"]);
+                        if (is_object($child))
+                        {
+                            $child->setParent($task);
+                            $em->persist($child);
+                        }
+                    }
+                    $em->flush();
+                }
+
+                $task->save();
+                echo json_encode($task->toArray());
             }
             else
             {
-                $task->setDueDate(null);
+                echo json_encode(array("error" => true, "message" => "The task could not be found."));
             }
-
-            if (isset($data["parent"]))
-            {
-                $parent = Task::find($data["parent"]["id"]);
-                if (is_object($parent))
-                {
-                    $task->setParent($parent);
-                }
-            }
-
-
-            if (isset($data["tags"]))
-            {
-                $task->getTags()->clear();
-
-                foreach ($data["tags"] as $tag_a)
-                {
-                    $tag = TaskTag::find($tag_a["id"]);
-                    if (is_object($tag))
-                    {
-                        $task->getTags()->add($tag);
-                    }
-                }
-            }
-
-            if (isset($data["creation_date"]))
-            {
-                $task->setCreationDate($data["creation_date"]);
-            }
-
-            if (isset($data["active"]))
-            {
-                $task->setActive($data["active"]);
-            }
-
-            if (isset($data['deadline']))
-            {
-                $deadline = Deadline::find($data['deadline']);
-                if (is_object($deadline))
-                {
-                    $task->setDeadline($deadline);
-                }
-            }
-
-            $em = \Model::getEntityManager();
-            if (isset($data["children"]))
-            {
-
-                foreach ($task->getChildren() as $child)
-                {
-                    $child->setParent(null);
-                    $em->persist($child);
-                }
-
-
-                foreach ($data["children"] as $child_a)
-                {
-                    $child = Task::find($child_a["id"]);
-                    if (is_object($child))
-                    {
-                        $child->setParent($task);
-                        $em->persist($child);
-                    }
-                }
-                $em->flush();
-            }
-
-            $task->save();
-            echo json_encode($task->toArray());
         }
-        else
-        {
-            echo json_encode(array("error" => true, "message" => "The task could not be found."));
-        }
+
     }
 
     public function destroy($params = array())
     {
-        if (isset($_GET["token"]) && $_GET["token"] != "")
-            $this->security_check_token($_GET["token"]);
-        else
-            $this->security_check();
 
         $this->render = false;
         header("Content-Type: application/json");
         $task = Task::find($params["id"]);
-
-        if (is_object($task))
+        if ($this->security_check($task))
         {
+            if (is_object($task))
+            {
 
 
 //            $task->setActive(false);
 //            $task->save();
-            $task->delete();
-            echo json_encode(array("success" => true));
-        }
-        else
-        {
-            echo json_encode(array("error" => true, "message" => "The task could not be found."));
+                $task->delete();
+                echo json_encode(array("success" => true));
+            }
+            else
+            {
+                echo json_encode(array("error" => true, "message" => "The task could not be found."));
+            }
         }
     }
 

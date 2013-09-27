@@ -256,7 +256,11 @@ define([
         getPlannedTasks: function () {
             var base = this;
             var filtered = SmartBlocks.Blocks.Organization.Data.planned_tasks.filter(function (pt) {
-                return pt.get("task").get("id") === base.get("id");
+                if (pt.get('task')) {
+                    return pt.get("task").get("id") === base.get("id");
+                } else {
+                    return false;
+                }
             });
             return new SmartBlocks.Blocks.Organization.Collections.PlannedTasks(filtered);
         },
