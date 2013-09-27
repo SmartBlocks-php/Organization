@@ -74,7 +74,7 @@ define([
 
             for (var k in tasks.models) {
                 var pts = SmartBlocks.Blocks.Organization.Data.planned_tasks.filter(function (pt) {
-                    return pt.get('task').get('id') == tasks.models[k].get('id')
+                    return pt.get('task') && pt.get('task').get('id') == tasks.models[k].get('id')
                 });
                 for (var i in pts) {
                     planned_tasks.add(pts[i]);

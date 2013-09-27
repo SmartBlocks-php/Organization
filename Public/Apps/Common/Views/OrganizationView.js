@@ -194,10 +194,11 @@ define([
             launchActivitiesIndex: function () {
                 var base = this;
                 base.current_view = new ActivitiesIndexView();
-                base.current_view.init(base.SmartBlocks);
+
                 base.$el.find(".control_bar a").removeClass("selected");
                 base.$el.find(".control_bar a.activities").addClass("selected");
                 base.setContent(base.current_view.$el);
+                base.current_view.init(base.SmartBlocks);
             },
             launchTasksBoard: function () {
                 var base = this;

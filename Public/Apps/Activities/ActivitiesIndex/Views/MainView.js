@@ -12,25 +12,19 @@ define([
         className: "activities_index_view",
         initialize: function () {
             var base = this;
-            base.$el.addClass("loading");
             base.activities = SmartBlocks.Blocks.Organization.Data.activities;
             base.moving = false;
             base.moving_timer = 0;
         },
-        init: function (SmartBlocks) {
+        init: function () {
             var base = this;
 
             base.SmartBlocks = SmartBlocks;
 
-            base.activity_types = new ActivityTypesCollection();
+            base.activity_types = SmartBlocks.Blocks.Organization.Data.activity_types;
             base.pos = 0;
-            base.activity_types.fetch({
-                success: function () {
-                    base.render();
-                    base.registerEvents();
-
-                }
-            });
+            base.render();
+            base.registerEvents();
 
 
         },
@@ -128,22 +122,20 @@ define([
         filterActivities: function () {
             var base = this;
 
-            base.$el.addClass("loading");
-            base.activities.fetch({
-                data: {
-                    "name": base.$el.find(".name_filter").val(),
-                    "archives": base.$el.find(".archived_filter").is(":checked") ? "1" : undefined,
-                    "type": base.$el.find(".types_filter").val()
-                },
-                success: function () {
-
-                    base.$el.removeClass("loading");
-                    base.$el.find(".found_count_nb").html(base.activities.models.length);
-                    base.tt_container.render();
-
-
-                }
+            base.activities =  SmartBlocks.Blocks.Organization.Data.activities.filter(function (activity) {
+                var name = activity.get('name');
+                var type = base.activity_types.get(base.$el.find(".types_filter").val());
+                var filter = name.indexOf(base.$el.find(".name_filter").val()) === 0 &&
+                    (!activity.get("archived") || base.$el.find(".archived_filter").is(":checked")) &&
+                    (!type || activity.get('type').get('id') === type.get('id'));
+                console.log(name, filter);
+                return filter;
             });
+
+            base.activities = new SmartBlocks.Blocks.Organization.Collections.Activities(base.activities);
+            base.tt_container.activities = base.activities;
+            base.$el.find(".found_count_nb").html(base.activities.models.length);
+            base.tt_container.render();
         },
         addFilterWord: function (word) {
             var base = this;
