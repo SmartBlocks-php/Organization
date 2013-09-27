@@ -6,7 +6,8 @@ define([
     'text!../Templates/new_task_thb.html',
     'text!../Templates/new_subtask_tpl.html',
     './SubtaskLine',
-    'ContextMenuView'
+    'ContextMenuView',
+    'jqueryui'
 ], function ($, _, Backbone, main_template, new_tpl, new_subtask_tpl, SubtaskLineView, ContextMenu) {
     var View = Backbone.View.extend({
         tagName: "div",
@@ -19,10 +20,10 @@ define([
             base.page_size = 4;
             base.page_count = 0;
         },
-        init: function (SmartBlocks) {
+        init: function (SmartBlocks, move_able) {
             var base = this;
             base.SmartBlocks = SmartBlocks;
-
+            base.move_able = move_able;
             base.render();
             base.registerEvents();
         },
@@ -33,6 +34,15 @@ define([
                 task: base.task
             });
             base.$el.html(template);
+
+            if (base.move_able || true) {
+                base.$el.draggable({
+                    revert: true,
+                    appendTo: 'body',
+                    containment: 'window',
+                    helper: "clone"
+                });
+            }
 
             base.renderSubtasksList();
         },

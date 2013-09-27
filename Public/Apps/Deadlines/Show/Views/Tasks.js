@@ -13,7 +13,7 @@ define([
             base.deadline = deadline;
             base.model = deadline;
             base.current_page = 1;
-            base.page_size = 5;
+            base.page_size = 3;
         },
         init: function (SmartBlocks) {
             var base = this;
@@ -27,10 +27,18 @@ define([
 
             var template = _.template(tasks_template, {});
             base.$el.html(template);
+
+
             base.renderPage(1);
         },
         renderPage: function (page) {
             var base = this;
+            if (base.$el.height() > 0) {
+                var psize = Math.floor(base.$el.height() * base.$el.width() / 49300);
+                if (psize > 0) {
+                    base.page_size = psize;
+                }
+            }
             var tasks = base.deadline.getTasks();
 
             base.page_count = Math.ceil(tasks.models.length / base.page_size);
@@ -55,8 +63,10 @@ define([
                 task_thumbnail.init(base.SmartBlocks);
             }
 
+
             var new_thb = TaskNormalThumbnail.new_tpl;
             base.$el.find(".tasks_list").append(new_thb);
+            base.$el.find(".tasks_list").append('<div class="clearer"></div>');
 
             base.$el.find("> .pagination_container .pagination").html("");
             for (var i = 1; i <= base.page_count; i++) {
@@ -85,7 +95,8 @@ define([
                 task.set('required_time', 4);
                 task.save({}, {
                     success: function () {
-                        base.SmartBlocks.show_message('Successfully created task');
+                        SmartBlocks.basics.show_message('Successfully created task');
+                        base.renderPage(base.page_count);
                     }
                 });
                 SmartBlocks.Blocks.Organization.Data.tasks.add(task);
@@ -96,6 +107,23 @@ define([
                 var elt = $(this);
                 var page = elt.attr('data-page');
                 base.renderPage(page);
+            });
+
+            SmartBlocks.Shortcuts.add([
+                37
+            ], function () {
+                console.log("left", base.$el.height());
+                if (base.$el.height() > 0) {
+                    base.renderPage(base.current_page - 1);
+                }
+            });
+            SmartBlocks.Shortcuts.add([
+                39
+            ], function () {
+                console.log("right");
+                if (base.$el.height() > 0) {
+                    base.renderPage(base.current_page + 1);
+                }
             });
         }
     });

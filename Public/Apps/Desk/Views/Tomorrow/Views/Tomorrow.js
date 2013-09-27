@@ -9,7 +9,7 @@ define([
 ], function ($, _, Backbone, main_template, DeadlinesIndexView) {
     var View = Backbone.View.extend({
         tagName: "div",
-        className: "a_class",
+        className: "tomorrow_view",
         initialize: function () {
             var base = this;
         },
@@ -45,7 +45,8 @@ define([
                 };
                 base.events.push(event);
             }
-
+            var now = new Date();
+            now.setDate(now.getDate() + 1);
             base.$el.find(".calendar_container").fullCalendar({
                 header: {
                     left: '',
@@ -59,6 +60,9 @@ define([
                 allDaySlot: false,
                 height: 550,
                 firstHour: firstHour,
+                date: now.getDate(),
+                month: now.getMonth(),
+                year: now.getFullYear(),
                 drop: function (date, allDay, jsEvent, ui) { // this function is called when something is dropped
 
                     // retrieve the dropped element's stored Event Object
@@ -84,7 +88,7 @@ define([
                     // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
 
 
-                    var planned_task = new PlannedTask();
+                    var planned_task = new SmartBlocks.Blocks.Organization.Models.PlannedTask();
                     var task = SmartBlocks.Blocks.Organization.Data.tasks.get($(this).attr("id"));
                     planned_task.setStart(date);
                     planned_task.set("duration", 3600000);
@@ -95,8 +99,19 @@ define([
                             copiedEventObject.id = planned_task.get("id");
                             copiedEventObject.color = (task.get("activity") != null) ? task.get("activity").type.color : "gray";
                             base.$el.fullCalendar('renderEvent', copiedEventObject);
-                            base.planned_tasks.add(planned_task);
-                            base.parent.events.trigger("updated_planned_task", planned_task);
+                            SmartBlocks.Blocks.Organization.Data.planned_tasks.add(planned_task);
+                            var newEvent = {
+                                title: planned_task.get('content'),
+                                start: date,
+                                id: planned_task.get("id"),
+                                allDay: allDay,
+                                end: end,
+                                className: "planned_task_cal",
+                                color: (planned_task.get("task").get("activity") != null) ? planned_task.get("task").get("activity").type.color : "gray"
+                            };
+
+
+                            base.$el.find(".calendar_container").fullCalendar('renderEvent', newEvent);
                         }
                     });
 
