@@ -54,9 +54,9 @@ define([
             base.$el.html("");
             base.$el.fullCalendar({
                 header: {
-                    left: 'prev, next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+                    left: '',
+                    center: '',
+                    right: ''
                 },
                 height: 650,
                 editable: true,
@@ -193,6 +193,8 @@ define([
                     });
                 }
             });
+
+
         },
         registerEvents: function () {
             var base = this;
@@ -201,6 +203,8 @@ define([
             base.$el.delegate(".planned_task_cal", "mousedown", function (e) {
 
             });
+
+
 
             base.planned_tasks.on("change", function (model) {
                 console.log(model, "stuff was changed in some planned task");
@@ -330,6 +334,8 @@ define([
                     }
                 }
             }, "#Organization/planning");
+
+
 
         },
         updateEvent: function (model) {

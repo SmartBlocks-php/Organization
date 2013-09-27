@@ -41,21 +41,30 @@ define([
             var calendar_view = new CalendarView();
             base.$el.find(".calendar_container").html(calendar_view.$el);
             calendar_view.init(base.SmartBlocks, base);
+            base.calendar_view = calendar_view;
+
+            base.update();
+
         },
         update: function () {
             var base = this;
-            var tasks = base.tasks_all.filter(function (task) {
-                return !task.fullyPlanned();
-            });
-            base.tasks = new TasksCollection();
-            for (var k in tasks) {
-                base.tasks.add(tasks[k]);
-            }
-            console.log(base.tasks);
+            var date = base.calendar_view.$el.fullCalendar('getDate');
 
-            base.task_panel = new TasksPanel();
-            base.$el.find(".activity_tree_container").html(base.task_panel.$el);
-            base.task_panel.init(base.SmartBlocks, base);
+            var view = base.calendar_view.$el.fullCalendar('getView');
+
+            if (view.name == "agendaWeek") {
+
+                var first_date = new Date(date);
+                var distance = -first_date.getDay();
+                first_date.setDate(date.getDate() + distance);
+                var last_date = new Date(date);
+                var distance = 6 - last_date.getDay();
+                last_date.setDate(date.getDate() + distance);
+                var string = "Week days from " + (parseInt(first_date.getMonth()) + 1) + "/" + first_date.getDate() + "/" + first_date.getFullYear();
+                string += " to " + (parseInt(last_date.getMonth()) + 1) + "/" + last_date.getDate() + "/" + last_date.getFullYear();
+                base.$el.find('.date').html(string);
+            }
+
 
         },
         registerEvents: function () {
@@ -68,6 +77,35 @@ define([
                 });
             });
 
+
+            base.$el.delegate(".prev_button", "click", function () {
+                base.calendar_view.$el.fullCalendar('prev');
+                base.update();
+            });
+
+            base.$el.delegate(".next_button", "click", function () {
+                base.calendar_view.$el.fullCalendar('next');
+                base.update();
+            });
+
+            base.$el.delegate(".today_button", "click", function () {
+                base.calendar_view.$el.fullCalendar('today');
+                base.update();
+            });
+
+            SmartBlocks.Shortcuts.add([
+                17, 37
+            ], function () {
+                base.calendar_view.$el.fullCalendar('prev');
+                base.update();
+            }, "#Organization/planning");
+
+            SmartBlocks.Shortcuts.add([
+                17, 39
+            ], function () {
+                base.calendar_view.$el.fullCalendar('next');
+                base.update();
+            }, "#Organization/planning");
         }
     });
 
