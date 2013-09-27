@@ -46,7 +46,7 @@ define([
             var deadline_show = new ShowView(base.deadline);
             base.$el.find(".deadline_body").html(deadline_show.$el);
             deadline_show.init(base.SmartBlocks);
-
+            base.deadline_show = deadline_show;
         },
         update: function () {
             var base = this;
@@ -77,10 +77,13 @@ define([
                 base.$el.addClass("expanded");
                 base.$el.find(".deadline_body").css("height", base.$el.parent().height() - 300);
                 console.log(base.$el.parent().height());
-                base.$el.find(".deadline_body").slideDown(200);
+                base.$el.find(".deadline_body").slideDown(200, function () {
+                    base.deadline_show.update();
+                });
                 var transform_n = -parseInt(base.$el.position().top - parseInt(base.$el.parent().css("margin-top")));
                 var transform = "translateY(-" + parseInt(base.$el.position().top) + "px)";
                 base.$el.parent().animate({'margin-top': transform_n}, 200);
+
             }
 
 

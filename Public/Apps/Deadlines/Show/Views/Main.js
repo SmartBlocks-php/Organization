@@ -29,6 +29,10 @@ define([
             base.$el.html(template);
             base.setSubapp('tasks');
         },
+        update: function () {
+            var base = this;
+            base.setSubapp('tasks');
+        },
         registerEvents: function () {
             var base = this;
 
@@ -46,6 +50,7 @@ define([
                 var tasks_view = new TasksView(base.deadline);
                 base.$el.find(".deadlineshow_subapp_container").html(tasks_view.$el);
                 tasks_view.init(base.SmartBlocks);
+
             } else if (subapp == "planning") {
                 base.$el.find(".planning_tab_button").addClass("pure-menu-selected");
                 base.$el.find(".deadlineshow_subapp_container").html("");
