@@ -12,8 +12,9 @@ define([
     'Organization/Apps/ActivityCreation/Views/MainView',
     'Organization/Apps/TaskCreation/Views/MainView',
     'Organization/Apps/Desk/Views/Main',
+    'Organization/Apps/Objectives/Views/Main',
     'Organization/Apps/Common/Organization'
-], function ($, _, Backbone, LoadingScreen, Template, ActivitiesIndexView, ActivitiesShowView, TasksShow, PlanningView, TasksIndex, ActivityCreationView, TaskCreationView, DeskView, CommonMethods) {
+], function ($, _, Backbone, LoadingScreen, Template, ActivitiesIndexView, ActivitiesShowView, TasksShow, PlanningView, TasksIndex, ActivityCreationView, TaskCreationView, DeskView, ObjectivesView, CommonMethods) {
         var OrganizationView = Backbone.View.extend({
             tagName:"div",
             className:"organization_view",
@@ -101,11 +102,8 @@ define([
                         window.location = "#Organization/desk/review";
                     }
                 }, "#Organization/desk");
-
-
                 base.app.initRoutes({
                     desk:function (subapp) {
-
                         base.launchDesk(subapp || "timeline");
                     },
                     activities_index:function () {
@@ -117,8 +115,8 @@ define([
                     activity_show:function (id, subpage) {
                         base.launchActivitiesShow(id, subpage);
                     },
-                    objectives:function () {
-                        base.launchObjectives();
+                    objectives:function (subapp) {
+                        base.launchObjectives(subapp || "recap");
                     },
                     planning:function () {
                         base.launchPlanningView();
@@ -288,10 +286,14 @@ define([
                     }
                 });
             },
-            launchObjectives:function () {
+            launchObjectives:function (subapp) {
                 var base = this;
-                console.log("launchObjectives");
-                base.setContent("Objectives views");
+                base.current_view = new ObjectivesView();
+                base.$el.find(".control_bar a").removeClass("selected");
+                base.$el.find(".control_bar a.objectives").addClass("selected");
+                base.setContent(base.current_view.$el);
+                base.current_view.init(base.SmartBlocks);
+                base.current_view.setSubapp(subapp);
             }
         });
 

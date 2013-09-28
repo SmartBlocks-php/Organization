@@ -70,7 +70,7 @@
                 "activities/:id" : "activity_show",
                 "activities/:id/:subpage" : "activity_show",
                 "planning": "planning",
-                "objectives": "objectives"
+                "objectives/:subapp": "objectives"
             },
             "restricted_to": "user"
         }
