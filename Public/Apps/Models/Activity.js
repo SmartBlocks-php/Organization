@@ -6,13 +6,13 @@ define([
     'Organization/Apps/Collections/Tasks'
 ], function (_, Backbone, ActivityType, Task, TasksCollection) {
     var Activity = Backbone.Model.extend({
-        defaults: {
-            "model_type": "Activity",
-            has_changed: false
+        defaults:{
+            "model_type":"Activity",
+            has_changed:false
 
         },
-        urlRoot: "/Organization/Activities",
-        parse: function (response) {
+        urlRoot:"/Organization/Activities",
+        parse:function (response) {
 
             var type_array = response.type;
             var type = new ActivityType(type_array);
@@ -34,30 +34,35 @@ define([
 
             return response;
         },
-        set: function (attributes, options) {
+        set:function (attributes, options) {
             var base = this;
             var result = Backbone.Model.prototype.set.call(this, attributes, options);
             base.has_changed = true;
             return result;
         },
-        save: function (attributes, options) {
+        save:function (attributes, options) {
             var base = this;
             var result = Backbone.Model.prototype.save.call(this, attributes, options);
             base.has_changed = false;
             return result;
         },
-        getDeadlines: function () {
+        getDeadlines:function () {
             var base = this;
 
             var deadlines_array = SmartBlocks.Blocks.Organization.Data.deadlines.filter(function (deadline) {
-                return deadline.get('activity').get('id') == base.get('id');
+                if (deadline.get('activity')) {
+                    return deadline.get('activity').get('id') == base.get('id');
+                }
+                else {
+                    return false;
+                }
             });
 
             var deadlines = new SmartBlocks.Blocks.Organization.Collections.Deadlines(deadlines_array);
             console.log(deadlines);
             return deadlines;
         },
-        getTasks: function () {
+        getTasks:function () {
             var base = this;
 
             var tasks_array = SmartBlocks.Blocks.Organization.Data.tasks.filter(function (task) {
@@ -66,7 +71,7 @@ define([
 
             return new SmartBlocks.Blocks.Organization.Collections.Tasks(tasks_array);
         },
-        getPlannedTasks: function () {
+        getPlannedTasks:function () {
             var base = this;
             var planned_tasks = new SmartBlocks.Blocks.Organization.Collections.PlannedTasks();
 

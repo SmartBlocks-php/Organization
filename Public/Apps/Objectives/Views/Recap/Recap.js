@@ -32,6 +32,16 @@ define([
         registerEvents:function () {
             var base = this;
 
+            base.$el.delegate(".objective_item", "click", function () {
+                var elt = $(this);
+                var id_select_obj = elt.attr("data-id");
+                if (id_select_obj !== undefined) {
+                    var selected_objective = SmartBlocks.Blocks.Organization.Data.objectives.get(id_select_obj);
+                    base.$el.find(".tasks_container").html("tasks of objective with id :" + id_select_obj);
+                    base.$el.find(".tasks_preview_container").removeClass("disabled");
+                }
+            });
+
             base.$el.delegate(".new_objective_button", "click", function () {
                 var new_objective = new Objective();
                 SmartBlocks.Blocks.Organization.Data.objectives.add(new_objective);

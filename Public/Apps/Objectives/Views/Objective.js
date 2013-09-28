@@ -15,10 +15,16 @@ define([
         init:function (objective) {
             var base = this;
             base.objective = objective;
+            base.model = objective;
             base.edition = false;
             base.render();
             base.registerEvents();
             base.$el.attr("oncontextmenu", "return false;");
+            base.objective.on("change", function (model) {
+                base.model = model;
+                console.log("Changed model to", model);
+                base.render();
+            });
         },
         render:function () {
             var base = this;
@@ -26,6 +32,9 @@ define([
                 objective:base.objective
             });
             base.$el.html(template);
+            if (base.objective.get("id") !== undefined) {
+                base.$el.attr("data-id", base.objective.get("id"));
+            }
         },
         modeEditionOn:function () {
             var base = this;
@@ -39,12 +48,13 @@ define([
             base.edition = false;
             var new_name = base.$el.find(".objective_name_input").val();
             base.objective.save({
-                name:new_name
-            }, {
-                success:function () {
-                    console.log("success updating objective");
-                }
-            });
+                    name:new_name
+                },
+                {
+                    success:function () {
+                        console.log("success updating objective");
+                    }
+                });
             base.$el.find(".objective_name").html(new_name);
             base.$el.find(".objective_name").removeClass("edition");
             base.$el.find(".objective_name_edition").css("display", "none");
@@ -52,7 +62,6 @@ define([
         registerEvents:function () {
             var base = this;
             base.$el.delegate(".objective_name_input", "keydown", function (event) {
-                console.log("keydown", event.keyCode);
                 var currentInput = event.target;
                 if (event.keyCode == 13) {
                     $(currentInput).focusout();
@@ -62,7 +71,6 @@ define([
             });
 
             base.$el.mouseup(function (e) {
-                console.log("mouseup");
                 if (e.which == 1) {
 
                 }
@@ -80,17 +88,16 @@ define([
                         });
                     }
 
-
                     context_menu.addButton("Delete", function () {
                         if (confirm("Are you sure you want to delete this objective ?")) {
                             base.objective.destroy({
                                 success:function () {
                                     SmartBlocks.Blocks.Organization.Data.objectives.remove(base.objective);
                                     base.$el.remove();
-                                    base.SmartBlocks.show_message("Successfully deleted objective.");
+                                    SmartBlocks.show_message("Successfully deleted objective.");
                                 },
                                 error:function () {
-                                    base.SmartBlocks.show_message("Couldn't delete objective.");
+                                    SmartBlocks.show_message("Couldn't delete objective.");
                                 }
                             });
                         }
