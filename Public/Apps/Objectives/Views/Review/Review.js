@@ -9,10 +9,8 @@ define([
         initialize:function () {
             var base = this;
         },
-        init:function (SmartBlocks) {
+        init:function () {
             var base = this;
-            base.SmartBlocks = SmartBlocks;
-
             base.render();
         },
         render:function () {

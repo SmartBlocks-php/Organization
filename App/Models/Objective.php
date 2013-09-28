@@ -32,6 +32,14 @@ class Objective extends \Model
      */
     private $tasks;
 
+    public function __construct()
+    {
+        $this->name = "New Objective";
+        $this->manually_validated = false;
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->creator = \User::current_user();
+    }
+
     public function setCreator($creator)
     {
         $this->creator = $creator;
