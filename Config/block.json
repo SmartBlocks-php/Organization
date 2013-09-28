@@ -3,6 +3,7 @@
     "token": "organization",
     "description": "This block contains organization apps.",
     "color": "#1c7783",
+    "main": "Organization/main",
     "types": [
         {
             "model_name": "Task",
