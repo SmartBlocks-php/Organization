@@ -41,7 +41,7 @@ define([
                     allDay: false,
                     id: planned_task.get("id"),
                     className: "planned_task_cal",
-                    color: (planned_task.get("task").get("activity") != null) ? planned_task.get("task").get("activity").type.color : "gray"
+                    color: "gray"
                 };
                 base.events.push(event);
             }
@@ -77,13 +77,8 @@ define([
                         date.setHours(12);
                     }
                     var end = new Date(date);
-
                     end.setHours(end.getHours() + 1);
-                    copiedEventObject.end = end;
-                    console.log(end);
-                    copiedEventObject.allDay = false;
-                    copiedEventObject.editable = true;
-                    copiedEventObject.className = "planned_task_cal";
+
                     // render the event on the calendar
                     // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
 
@@ -96,8 +91,6 @@ define([
                     planned_task.set("task", task);
                     planned_task.save({}, {
                         success: function () {
-                            copiedEventObject.id = planned_task.get("id");
-                            copiedEventObject.color = (task.get("activity") != null) ? task.get("activity").type.color : "gray";
                             base.$el.fullCalendar('renderEvent', copiedEventObject);
                             SmartBlocks.Blocks.Organization.Data.planned_tasks.add(planned_task);
                             var newEvent = {
@@ -107,7 +100,7 @@ define([
                                 allDay: allDay,
                                 end: end,
                                 className: "planned_task_cal",
-                                color: (planned_task.get("task").get("activity") != null) ? planned_task.get("task").get("activity").type.color : "gray"
+                                color: "gray"
                             };
 
 
