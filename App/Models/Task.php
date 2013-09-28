@@ -135,6 +135,10 @@ class Task extends \Model
      */
     private $deadline;
 
+    /**
+     * @ManyToMany(targetEntity="\Organization\Objective", mappedBy="tasks")
+     */
+    private $objectives;
 
     public function __construct()
     {
@@ -341,8 +345,6 @@ class Task extends \Model
     {
         return $this->subtasks;
     }
-
-
 
 
     public function getRequiredTime()
@@ -587,6 +589,21 @@ class Task extends \Model
         }
 
         return $array;
+    }
+
+    public function addObjective($objective)
+    {
+        $this->objectives[] = $objective;
+    }
+
+    public function setObjectives($objectives)
+    {
+        $this->objectives = $objectives;
+    }
+
+    public function getObjectives()
+    {
+        return $this->objectives;
     }
 }
 

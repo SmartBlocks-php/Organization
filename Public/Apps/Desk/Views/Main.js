@@ -49,7 +49,6 @@ define([
                 base.$el.find(".desk_subapp_container").html(subapp.$el);
                 subapp.init();
             }
-
         },
         registerEvents: function () {
             var base = this;

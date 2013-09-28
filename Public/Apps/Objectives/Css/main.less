@@ -1,0 +1,56 @@
+.objectives_view {
+
+    .fullheight {
+        height: 100%;
+    }
+
+    .my_objectives_container {
+        width: 900px;
+        height: 600px;
+        margin: auto;
+        background: #f5f5f5;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        margin-top: 50px;
+    }
+
+    .objectives_subapp_container {
+        height: ~"calc(100% - 33px)";
+    }
+
+    .objectives_recap_view {
+        .objectives_box {
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .new_objective_button {
+            transition: all 200ms;
+
+            font-size: 50px;
+            color: #cdcdcd;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+
+            &:hover {
+                background: #cdcdcd;
+                color: white;
+            }
+        }
+
+        .tasks_preview_container {
+            .tasks_container {
+                display: none;
+            }
+
+            .disabled_message {
+                display: block;
+                text-align: center;
+                height: 50px;
+                color: gray;
+                font-size: 20px;
+                font-weight: bold;
+                margin-top: ~"calc(50% - 25px)";
+            }
+        }
+    }
+}
