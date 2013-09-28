@@ -1,0 +1,39 @@
+.objective_item {
+    min-height: 50px;
+    background: #f9f9f9;
+    transition: background 200ms;
+    border-bottom: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    color: #424242;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        background: #f0f0f0;
+    }
+
+    .objective_name {
+        display: block;
+        font-size: 1.4em;
+        text-align: center;
+        margin-top: calc(4%);
+    }
+    .objective_name.edition {
+        display: none;
+    }
+
+    .objective_name_edition {
+        display: none;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+
+        .objective_name_input {
+            display: block;
+            height: 1.6em;
+            margin: auto;
+            margin-top: calc(3%);
+        }
+    }
+}

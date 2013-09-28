@@ -89,4 +89,23 @@ class Objective extends \Model
     {
         return $this->manually_validated;
     }
+
+    public function toArray($full = true)
+    {
+        $myArray = array();
+        $myArray["id"] = $this->id;
+        $myArray["name"] = $this->name;
+        $myArray["manually_validated"] = $this->manually_validated;
+        $myArray["creator"] = $this->creator;
+        $myArray["tasks"] = array();
+        if ($full)
+        {
+            foreach ($this->tasks as $task)
+            {
+                $myArray["tasks"][] = $task->toArray(true, true, true, true, true, false);
+            }
+        }
+
+        return $myArray;
+    }
 }

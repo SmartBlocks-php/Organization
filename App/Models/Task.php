@@ -497,7 +497,7 @@ class Task extends \Model
         return $activities;
     }
 
-    public function toArray($show_task_users = true, $show_activities = true, $show_parent = true, $show_children = true, $show_subtasks = true)
+    public function toArray($show_task_users = true, $show_activities = true, $show_parent = true, $show_children = true, $show_subtasks = true, $show_objectives = true)
     {
         $tags = array();
         foreach ($this->tags as $tag)
@@ -584,6 +584,16 @@ class Task extends \Model
             foreach ($this->subtasks as $subtask)
             {
                 $subtasks[] = $subtask->toArray(false);
+            }
+            $array["subtasks"] = $subtasks;
+        }
+
+        if ($show_objectives)
+        {
+            $objectives = array();
+            foreach ($this->objectives as $objective)
+            {
+                $objectives[] = $objective->toArray(false);
             }
             $array["subtasks"] = $subtasks;
         }

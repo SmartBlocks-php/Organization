@@ -118,14 +118,10 @@ define([
                     });
 
                     context_menu.show(e);
-
-
                 }
                 console.log(e.which);
 
             });
-
-
         }
     });
 

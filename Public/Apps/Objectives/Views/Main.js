@@ -15,7 +15,6 @@ define([
         init:function (SmartBlocks) {
             var base = this;
             base.SmartBlocks = SmartBlocks;
-
             base.render();
             base.registerEvents();
         },

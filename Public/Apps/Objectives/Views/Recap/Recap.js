@@ -23,7 +23,6 @@ define([
             var template = _.template(recap_template, {});
             base.$el.html(template);
             var objectives = SmartBlocks.Blocks.Organization.Data.objectives.models;
-            console.log("init objectives", objectives);
             for (var k in objectives) {
                 var objView = new ObjectiveView();
                 objView.init(objectives[k]);
