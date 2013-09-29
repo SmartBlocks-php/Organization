@@ -81,7 +81,6 @@ define([
 
                     end.setHours(end.getHours() + 1);
                     copiedEventObject.end = end;
-                    console.log(end);
                     copiedEventObject.allDay = false;
                     copiedEventObject.editable = true;
 
@@ -113,7 +112,6 @@ define([
                     if (planned_task) {
                         planned_task.setStart(event.start);
 
-                        console.log(event, planned_task.getStart());
                         planned_task.save();
 
                     }
@@ -126,7 +124,6 @@ define([
                         planned_task.setStart(event.start);
                         planned_task.set("duration", event.end.getTime() - event.start.getTime());
 
-                        console.log(event, planned_task.getStart());
 
                         planned_task.save({}, {
                             success: function () {
@@ -142,7 +139,7 @@ define([
 
                     base.$el.find(".selected_event").removeClass("selected_event");
                     elt.addClass("selected_event");
-                    console.log(event, elt.attr("class"));
+
                     base.selected_pt = SmartBlocks.Blocks.Organization.Data.planned_tasks.get(event.id);
                 },
                 dayClick: function(date, allDay, jsEvent, view) { // Creation of events on click
@@ -207,7 +204,6 @@ define([
 
 
             base.planned_tasks.on("change", function (model) {
-                console.log(model, "stuff was changed in some planned task");
                 base.updateEvent(model);
                 if (base.selected_pt) {
                     if (base.$el.find(".selected_event").length > 1) {
@@ -246,7 +242,6 @@ define([
 
                         clearTimeout(move_timer);
                         move_timer = setTimeout(function () {
-                            console.log("saved");
                             base.selected_pt.save();
                         }, 1000);
 
@@ -264,7 +259,6 @@ define([
                         base.selected_pt.setStart(date);
                         clearTimeout(move_timer);
                         move_timer = setTimeout(function () {
-                            console.log("saved");
                             base.selected_pt.save();
                         }, 1000);
                     }
@@ -281,7 +275,6 @@ define([
                         base.selected_pt.setStart(date);
                         clearTimeout(move_timer);
                         move_timer = setTimeout(function () {
-                            console.log("saved");
                             base.selected_pt.save();
                         }, 1000);
                     }
@@ -298,7 +291,6 @@ define([
                         base.selected_pt.setStart(date);
                         clearTimeout(move_timer);
                         move_timer = setTimeout(function () {
-                            console.log("saved");
                             base.selected_pt.save();
                         }, 1000);
                     }
@@ -328,7 +320,6 @@ define([
                         base.selected_pt.set("duration", base.selected_pt.get("duration") - 30 * 60 * 1000);
                         clearTimeout(move_timer);
                         move_timer = setTimeout(function () {
-                            console.log("saved");
                             base.selected_pt.save();
                         }, 1000);
                     }
