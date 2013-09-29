@@ -132,7 +132,7 @@ define([
 
                         planned_task.save({}, {
                             success: function () {
-                                base.parent.events.trigger("updated_planned_task");
+                                SmartBlocks.events.trigger("updated_planned_task");
                             }
                         });
 
@@ -168,7 +168,7 @@ define([
 
             var deadlines_index = new DeadlinesIndexView(SmartBlocks.Blocks.Organization.Data.deadlines);
             base.$el.find(".deadlines_index_container").html(deadlines_index.$el);
-            deadlines_index.init(base.SmartBlocks);
+            deadlines_index.init(true);
 
         },
         registerEvents: function () {

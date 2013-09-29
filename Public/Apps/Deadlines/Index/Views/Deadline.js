@@ -15,9 +15,9 @@ define([
             base.deadline = deadline;
             base.model = deadline;
         },
-        init: function (SmartBlocks, params) {
+        init: function (draggable_tasks, params) {
             var base = this;
-            base.SmartBlocks = SmartBlocks;
+            base.draggable_tasks = draggable_tasks;
             base.activity = params.activity;
             base.show_activity = params.activity !== undefined;
 
@@ -45,7 +45,7 @@ define([
 
             var deadline_show = new ShowView(base.deadline);
             base.$el.find(".deadline_body").html(deadline_show.$el);
-            deadline_show.init(base.SmartBlocks);
+            deadline_show.init(base.draggable_tasks);
             base.deadline_show = deadline_show;
         },
         update: function () {

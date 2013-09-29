@@ -20,10 +20,9 @@ define([
             base.page_size = 4;
             base.page_count = 0;
         },
-        init: function (SmartBlocks, move_able) {
+        init: function (draggable_task) {
             var base = this;
-            base.SmartBlocks = SmartBlocks;
-            base.move_able = move_able;
+            base.draggable_task = draggable_task;
             base.render();
             base.registerEvents();
         },
@@ -35,7 +34,7 @@ define([
             });
             base.$el.html(template);
 
-            if (base.move_able || true) {
+            if (base.draggable_task === true) {
                 base.$el.draggable({
                     revert: true,
                     appendTo: 'body',
