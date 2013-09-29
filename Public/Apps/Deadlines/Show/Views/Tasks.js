@@ -15,10 +15,10 @@ define([
             base.current_page = 1;
             base.page_size = 3;
         },
-        init: function (SmartBlocks) {
+        init: function (draggable_tasks) {
             var base = this;
-            base.SmartBlocks = SmartBlocks;
 
+            base.draggable_tasks = draggable_tasks;
             base.render();
             base.registerEvents();
         },
@@ -60,7 +60,7 @@ define([
                 var task = tasks[k];
                 var task_thumbnail = new TaskNormalThumbnail(task);
                 base.$el.find(".tasks_list").append(task_thumbnail.$el);
-                task_thumbnail.init(base.SmartBlocks);
+                task_thumbnail.init(base.draggable_tasks);
             }
 
 

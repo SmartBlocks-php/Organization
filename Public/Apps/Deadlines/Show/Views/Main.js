@@ -13,9 +13,9 @@ define([
             base.deadline = deadline;
             base.model = deadline;
         },
-        init: function (SmartBlocks) {
+        init: function (draggable_tasks) {
             var base = this;
-            base.SmartBlocks = SmartBlocks;
+            base.draggable_tasks = draggable_tasks;
 
             base.render();
             base.registerEvents();
@@ -49,7 +49,7 @@ define([
                 base.$el.find(".tasks_tab_button").addClass("pure-menu-selected");
                 var tasks_view = new TasksView(base.deadline);
                 base.$el.find(".deadlineshow_subapp_container").html(tasks_view.$el);
-                tasks_view.init(base.SmartBlocks);
+                tasks_view.init(base.draggable_tasks);
 
             } else if (subapp == "planning") {
                 base.$el.find(".planning_tab_button").addClass("pure-menu-selected");

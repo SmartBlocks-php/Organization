@@ -17,9 +17,9 @@ define([
             base.current_page = 1;
             base.page_count = 0;
         },
-        init: function (SmartBlocks, activity) {
+        init: function (draggable_tasks, activity) {
             var base = this;
-            base.SmartBlocks = SmartBlocks;
+            base.draggable_tasks = draggable_tasks;
             base.activity = activity;
 
             base.render();
@@ -51,7 +51,7 @@ define([
             for (var k in base.deadlines.models) {
                 var deadline_view = new DeadlineShow(base.deadlines.models[k]);
                 base.$el.find(".deadlines_container").append(deadline_view.$el);
-                deadline_view.init(base.SmartBlocks, {
+                deadline_view.init(base.draggable_tasks, {
                     activity: base.activity,
                     show_activity: base.activity === undefined
                 });

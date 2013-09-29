@@ -571,7 +571,7 @@ class Task extends \Model
 //            }
 //            $array["children"] = $children;
 //        }
-
+        $subtasks = array();
         if ($show_subtasks)
         {
 //            $em = \Model::getEntityManager();
@@ -580,7 +580,6 @@ class Task extends \Model
 //            $qb->where("subtask.task = :task")->setParameter("task", $this);
 //            $result = $qb->getQuery()->getResult();
 
-            $subtasks = array();
             foreach ($this->subtasks as $subtask)
             {
                 $subtasks[] = $subtask->toArray(false);
