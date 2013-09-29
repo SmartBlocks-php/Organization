@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!../../Templates/recap.html',
+    'text!../../Templates/Recap/recap.html',
     'Organization/Apps/Models/Objective',
     'Organization/Apps/Collections/Objectives',
-    './../Objective'
-], function ($, _, Backbone, recap_template, Objective, ObjectivesCollection, ObjectiveView) {
+    './../ObjectiveItem',
+    './TasksRecap'
+], function ($, _, Backbone, recap_template, Objective, ObjectivesCollection, ObjectiveItemView, TasksRecapView) {
     var View = Backbone.View.extend({
         tagName:"div",
         className:"objectives_recap_view fullheight",
@@ -24,7 +25,7 @@ define([
             base.$el.html(template);
             var objectives = SmartBlocks.Blocks.Organization.Data.objectives.models;
             for (var k in objectives) {
-                var objView = new ObjectiveView();
+                var objView = new ObjectiveItemView();
                 objView.init(objectives[k]);
                 base.$el.find(".objectives_container").append(objView.$el);
             }
@@ -33,15 +34,15 @@ define([
             var base = this;
 
             SmartBlocks.events.on("objective_mouseup1", function (objective) {
-                console.log("objective_mouseup1 on", objective)
-                var id_select_obj = objective.get("id");
-                base.$el.find(".tasks_container").html("tasks of objective with id :" + id_select_obj);
+                var tasksRecapView = new TasksRecapView();
+                tasksRecapView.init(objective);
+                base.$el.find(".tasks_container").html(tasksRecapView.$el);
                 base.$el.find(".tasks_preview_container").removeClass("disabled");
             });
 
             SmartBlocks.events.on("objective_destroy", function (objective) {
                 base.$el.find(".tasks_preview_container").addClass("disabled");
-                base.$el.find(".tasks_container").html("");
+                base.$el.find(".tasks_container").html();
             });
 
             base.$el.delegate(".new_objective_button", "click", function () {
@@ -52,7 +53,7 @@ define([
                         console.log("new_objective save", new_objective);
                     }
                 });
-                var objView = new ObjectiveView();
+                var objView = new ObjectiveItemView();
                 objView.init(new_objective);
                 base.$el.find(".objectives_container").append(objView.$el);
             });
