@@ -157,6 +157,7 @@ class Task extends \Model
         $this->required_time = 0;
         $this->planned_tasks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subtasks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->objectives = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId()
