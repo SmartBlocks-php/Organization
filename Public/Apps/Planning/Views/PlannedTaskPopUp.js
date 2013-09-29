@@ -112,13 +112,14 @@ define([
                 var selected_task = SmartBlocks.Blocks.Organization.Data.tasks.get(selected_task_id);
                 if (selected_task) {
                     base.planned_task.set("task", selected_task);
+                } else {
+                    base.planned_task.set("task", undefined);
                 }
 
                 base.event.title = base.planned_task.get("content");
                 if (base.planned_task.get("content") != "") {
                     base.planned_task.save({}, {
                         success: function () {
-                            console.log("Succesfully updated planned task");
                             base.$el.remove();
                             base.events.trigger("saved", base.event);
                         }

@@ -10,9 +10,7 @@ define([
             return new Date(this.get("start"));
         },
         setStart: function (date) {
-            console.log(date);
             this.set("start", date.getTime());
-            console.log(this);
         },
         getEnd: function () {
             var start = new Date(this.get("start"));
