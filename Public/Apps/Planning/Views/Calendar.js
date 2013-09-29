@@ -248,7 +248,7 @@ define([
                         move_timer = setTimeout(function () {
                             console.log("saved");
                             base.selected_pt.save();
-                        }, 250);
+                        }, 1000);
 
                     }
                 }
@@ -266,7 +266,7 @@ define([
                         move_timer = setTimeout(function () {
                             console.log("saved");
                             base.selected_pt.save();
-                        }, 500);
+                        }, 1000);
                     }
                 }
             }, "#Organization/planning");
@@ -283,7 +283,7 @@ define([
                         move_timer = setTimeout(function () {
                             console.log("saved");
                             base.selected_pt.save();
-                        }, 500);
+                        }, 1000);
                     }
                 }
             }, "#Organization/planning");
@@ -300,7 +300,7 @@ define([
                         move_timer = setTimeout(function () {
                             console.log("saved");
                             base.selected_pt.save();
-                        }, 500);
+                        }, 1000);
                     }
                 }
             }, "#Organization/planning");
@@ -315,7 +315,7 @@ define([
                         clearTimeout(move_timer);
                         move_timer = setTimeout(function () {
                             base.selected_pt.save();
-                        }, 500);
+                        }, 1000);
                     }
                 }
             }, "#Organization/planning");
@@ -330,7 +330,7 @@ define([
                         move_timer = setTimeout(function () {
                             console.log("saved");
                             base.selected_pt.save();
-                        }, 500);
+                        }, 1000);
                     }
                 }
             }, "#Organization/planning");
