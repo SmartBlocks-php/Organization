@@ -47,7 +47,7 @@ define([
                     allDay: false,
                     id: planned_task.get("id"),
                     className: "planned_task_cal pt_event" + planned_task.get('id'),
-                    color:  "gray"
+                    color: "gray"
                 };
                 base.events.push(event);
             }
@@ -142,7 +142,7 @@ define([
 
                     base.selected_pt = SmartBlocks.Blocks.Organization.Data.planned_tasks.get(event.id);
                 },
-                dayClick: function(date, allDay, jsEvent, view) { // Creation of events on click
+                dayClick: function (date, allDay, jsEvent, view) { // Creation of events on click
 
                     var end = new Date(date);
                     end.setHours(date.getHours() + 1);
@@ -150,21 +150,18 @@ define([
                     planned_task.setStart(date);
                     planned_task.set("duration", 3600000);
                     planned_task.set("content", "New event");
-                    planned_task.save({}, {
-                        success: function () {
-                            SmartBlocks.Blocks.Organization.Data.planned_tasks.add(planned_task);
-                            var newEvent = {
-                                title: planned_task.get('content'),
-                                start: date,
-                                id: planned_task.get("id"),
-                                allDay: allDay,
-                                end: end,
-                                className: "planned_task_cal pt_event" + planned_task.get('id'),
-                                color: "gray"
-                            };
-                            base.$el.fullCalendar('renderEvent', newEvent);
-                        }
-                    });
+                    SmartBlocks.Blocks.Organization.Data.planned_tasks.add(planned_task);
+                    var newEvent = {
+                        title: planned_task.get('content'),
+                        start: date,
+                        id: "noid",
+                        allDay: allDay,
+                        end: end,
+                        className: "planned_task_cal pt_event" + planned_task.get('id'),
+                        color: "rgba(50,50,50,0.3)"
+                    };
+                    base.$el.fullCalendar('renderEvent', newEvent);
+                    planned_task.save();
                 },
                 eventRender: function (event, element) {
                     var elt = $(element);
@@ -188,6 +185,9 @@ define([
                             });
                         }
                     });
+                },
+                viewDisplay: function (view) {
+
                 }
             });
 
@@ -200,7 +200,6 @@ define([
             base.$el.delegate(".planned_task_cal", "mousedown", function (e) {
 
             });
-
 
 
             base.planned_tasks.on("change", function (model) {
@@ -219,7 +218,7 @@ define([
                 if (base.$el.height() > 0) {
                     if (base.selected_pt) {
                         var id = base.selected_pt.get('id');
-                        base.$el.fullCalendar( 'removeEvents', [id] );
+                        base.$el.fullCalendar('removeEvents', [id]);
                         base.selected_pt.destroy({
                             success: function () {
                                 SmartBlocks.basics.show_message("Successfully deleted event");
@@ -230,7 +229,7 @@ define([
             }, "#Organization/planning");
 
             var move_timer = 0;
-                SmartBlocks.Shortcuts.add([
+            SmartBlocks.Shortcuts.add([
                 37
             ], function () {
                 if (base.$el.height() > 0) {
@@ -327,12 +326,12 @@ define([
             }, "#Organization/planning");
 
 
-
         },
         updateEvent: function (model) {
             var base = this;
             var base = this;
-            base.$el.fullCalendar( 'removeEvents', [model.get('id')] );
+            base.$el.fullCalendar('removeEvents', [model.get('id')]);
+            base.$el.fullCalendar('removeEvents', ["noid"]);
 
             var newEvent = {
                 title: model.get('content'),
