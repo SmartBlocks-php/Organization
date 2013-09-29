@@ -32,14 +32,16 @@ define([
         registerEvents:function () {
             var base = this;
 
-            base.$el.delegate(".objective_item", "click", function () {
-                var elt = $(this);
-                var id_select_obj = elt.attr("data-id");
-                if (id_select_obj !== undefined) {
-                    var selected_objective = SmartBlocks.Blocks.Organization.Data.objectives.get(id_select_obj);
-                    base.$el.find(".tasks_container").html("tasks of objective with id :" + id_select_obj);
-                    base.$el.find(".tasks_preview_container").removeClass("disabled");
-                }
+            SmartBlocks.events.on("objective_mouseup1", function (objective) {
+                console.log("objective_mouseup1 on", objective)
+                var id_select_obj = objective.get("id");
+                base.$el.find(".tasks_container").html("tasks of objective with id :" + id_select_obj);
+                base.$el.find(".tasks_preview_container").removeClass("disabled");
+            });
+
+            SmartBlocks.events.on("objective_destroy", function (objective) {
+                base.$el.find(".tasks_preview_container").addClass("disabled");
+                base.$el.find(".tasks_container").html("");
             });
 
             base.$el.delegate(".new_objective_button", "click", function () {

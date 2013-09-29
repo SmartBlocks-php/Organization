@@ -72,7 +72,8 @@ define([
 
             base.$el.mouseup(function (e) {
                 if (e.which == 1) {
-
+                    console.log("objective_mouseup1 trigger");
+                    SmartBlocks.events.trigger("objective_mouseup1", base.objective);
                 }
 
                 if (e.which == 3) {
@@ -94,10 +95,11 @@ define([
                                 success:function () {
                                     SmartBlocks.Blocks.Organization.Data.objectives.remove(base.objective);
                                     base.$el.remove();
-                                    SmartBlocks.show_message("Successfully deleted objective.");
+                                    SmartBlocks.events.trigger("objective_destroy", base.objective);
+                                    SmartBlocks.basics.show_message("Successfully deleted objective.");
                                 },
                                 error:function () {
-                                    SmartBlocks.show_message("Couldn't delete objective.");
+                                    SmartBlocks.basics.show_message("Couldn't delete objective.");
                                 }
                             });
                         }
