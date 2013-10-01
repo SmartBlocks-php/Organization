@@ -28,6 +28,7 @@ define([
             var base = this;
 
             base.$el.delegate(".new_task_button", "click", function () {
+                console.log("new_task_button click");
                 var new_task = new Task();
                 SmartBlocks.Blocks.Organization.Data.tasks.add(new_task);
                 new_task.save({}, {

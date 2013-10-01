@@ -4,7 +4,8 @@ define([
     'backbone',
     'text!../Templates/objective.html',
     'Organization/Apps/Models/Objective',
-    'ContextMenuView'
+    'ContextMenuView',
+    'jqueryui'
 ], function ($, _, Backbone, objective_template, Objective, ContextMenu) {
     var View = Backbone.View.extend({
         tagName:"div",
@@ -22,7 +23,14 @@ define([
             base.$el.attr("oncontextmenu", "return false;");
             base.objective.on("change", function (model) {
                 base.model = model;
+                base.objective = model;
                 base.render();
+            });
+
+            base.$el.droppable({
+                drop:function () {
+
+                }
             });
         },
         render:function () {
@@ -89,10 +97,10 @@ define([
 
                     context_menu.addButton("Delete", function () {
                         if (confirm("Are you sure you want to delete this objective ?")) {
+                            base.$el.remove();
+                            SmartBlocks.Blocks.Organization.Data.objectives.remove(base.objective);
                             base.objective.destroy({
                                 success:function () {
-                                    SmartBlocks.Blocks.Organization.Data.objectives.remove(base.objective);
-                                    base.$el.remove();
                                     SmartBlocks.events.trigger("objective_destroy", base.objective);
                                     SmartBlocks.basics.show_message("Successfully deleted objective.");
                                 },
