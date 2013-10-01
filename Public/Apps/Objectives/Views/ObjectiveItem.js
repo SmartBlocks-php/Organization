@@ -28,8 +28,8 @@ define([
             });
 
             base.$el.droppable({
-                drop:function () {
-
+                drop:function (event, ui) {
+                    console.log("task ID ", ui.draggable.context.attributes.id.value);
                 }
             });
         },

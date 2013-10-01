@@ -42,6 +42,11 @@ define([
         },
         registerEvents:function () {
             var base = this;
+
+            base.$el.delegate(".recap", "click", function () {
+                base.$el.find(".tasks_preview_container").removeClass("active");
+                base.$el.find(".tasks_recap_container").html();
+            });
         }
     });
 

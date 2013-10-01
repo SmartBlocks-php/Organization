@@ -31,11 +31,18 @@ define([
                 base.$el.find(".objectives_container").append(objView.$el);
             }
 
+
             var tasks = SmartBlocks.Blocks.Organization.Data.tasks.models;
-            for (var k in tasks) {
-                var taskNormalThumbnailView = new TaskNormalThumbnail(tasks[k]);
-                taskNormalThumbnailView.init(true);
-                base.$el.find(".tasks_all_box").append(taskNormalThumbnailView.$el);
+            if (tasks.length > 0) {
+                base.$el.find(".tasks_all_box").html();
+                for (var k in tasks) {
+                    var taskNormalThumbnailView = new TaskNormalThumbnail(tasks[k]);
+                    taskNormalThumbnailView.init(true);
+                    base.$el.find(".tasks_all_box").append(taskNormalThumbnailView.$el);
+                }
+            }
+            else {
+                base.$el.find(".tasks_all_box").html("No tasks found.");
             }
         },
         registerEvents:function () {
