@@ -37,34 +37,50 @@
             }
         }
 
-        .tasks_preview_container.disabled {
-            .tasks_container {
-                display: none;
-            }
-            .disabled_message {
+        .tasks_preview_container.active {
+            .tasks_recap_container {
                 display: block;
-                text-align: center;
-                height: 50px;
-                color: gray;
-                font-size: 20px;
-                font-weight: bold;
-                margin-top: ~"calc(50% - 25px)";
             }
+            .tasks_all_box {
+                padding: 5px;
+                .task_normal_thumbnail {
+                    float: none;
+                    margin: auto;
+                }
+            }
+        //            .disabled_message {
+        //                display: block;
+        //                text-align: center;
+        //                height: 50px;
+        //                color: gray;
+        //                font-size: 20px;
+        //                font-weight: bold;
+        //                margin-top: ~"calc(50% - 25px)";
+        //            }
         }
+
         .tasks_preview_container {
-            .tasks_container {
-                display: block;
-            }
-            .disabled_message {
+            .tasks_recap_container {
                 display: none;
-                text-align: center;
-                height: 50px;
-                color: gray;
-                font-size: 20px;
-                font-weight: bold;
-                margin-top: ~"calc(50% - 25px)";
             }
+            .tasks_all_box {
+                padding: 5px;
+                .task_normal_thumbnail {
+                    float: none;
+                    margin: auto;
+                }
+            }
+        //            .disabled_message {
+        //                display: none;
+        //                text-align: center;
+        //                height: 50px;
+        //                color: gray;
+        //                font-size: 20px;
+        //                font-weight: bold;
+        //                margin-top: ~"calc(50% - 25px)";
+        //            }
         }
     }
-@import "objective.less";
+@import "objectiveItem.less";
+@import "tasksRecap.less";
 }

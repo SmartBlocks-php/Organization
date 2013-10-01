@@ -4,7 +4,8 @@ define([
     'backbone',
     'text!../Templates/objective.html',
     'Organization/Apps/Models/Objective',
-    'ContextMenuView'
+    'ContextMenuView',
+    'jqueryui'
 ], function ($, _, Backbone, objective_template, Objective, ContextMenu) {
     var View = Backbone.View.extend({
         tagName:"div",
@@ -22,8 +23,14 @@ define([
             base.$el.attr("oncontextmenu", "return false;");
             base.objective.on("change", function (model) {
                 base.model = model;
-                console.log("Changed model to", model);
+                base.objective = model;
                 base.render();
+            });
+
+            base.$el.droppable({
+                drop:function () {
+
+                }
             });
         },
         render:function () {
@@ -52,7 +59,7 @@ define([
                 },
                 {
                     success:function () {
-                        console.log("success updating objective");
+                        SmartBlocks.basics.show_message("Successfully update objective.");
                     }
                 });
             base.$el.find(".objective_name").html(new_name);
@@ -72,7 +79,6 @@ define([
 
             base.$el.mouseup(function (e) {
                 if (e.which == 1) {
-                    console.log("objective_mouseup1 trigger");
                     SmartBlocks.events.trigger("objective_mouseup1", base.objective);
                 }
 
@@ -91,10 +97,10 @@ define([
 
                     context_menu.addButton("Delete", function () {
                         if (confirm("Are you sure you want to delete this objective ?")) {
+                            base.$el.remove();
+                            SmartBlocks.Blocks.Organization.Data.objectives.remove(base.objective);
                             base.objective.destroy({
                                 success:function () {
-                                    SmartBlocks.Blocks.Organization.Data.objectives.remove(base.objective);
-                                    base.$el.remove();
                                     SmartBlocks.events.trigger("objective_destroy", base.objective);
                                     SmartBlocks.basics.show_message("Successfully deleted objective.");
                                 },
