@@ -118,9 +118,9 @@ define([
 
                 base.event.title = base.planned_task.get("content");
                 if (base.planned_task.get("content") != "") {
+                    base.$el.remove();
                     base.planned_task.save({}, {
                         success: function () {
-                            base.$el.remove();
                             base.events.trigger("saved", base.event);
                         }
                     });
@@ -134,10 +134,10 @@ define([
             });
 
             base.$el.find(".delete_button").click(function () {
+                base.$el.remove();
                 base.planned_task.destroy({
                     success: function () {
                         base.events.trigger("deleted");
-                        base.$el.remove();
                     }
                 });
             });
