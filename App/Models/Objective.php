@@ -75,6 +75,11 @@ class Objective extends \Model
         $this->tasks = $tasks;
     }
 
+    public function deleteTasks()
+    {
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function getTasks()
     {
         return $this->tasks;

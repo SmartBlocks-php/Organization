@@ -4,17 +4,27 @@ define([
     'backbone',
     'text!../../Templates/Recap/tasks_recap.html',
     'Organization/Apps/Models/Task',
-    './TaskItem'
-], function ($, _, Backbone, tasks_recap_template, Task, TaskItemView) {
+    'Organization/Apps/Collections/Tasks',
+    './TaskItem',
+    'Organization/Apps/Tasks/NormalThumbnail/Views/Main'
+], function ($, _, Backbone, tasks_recap_template, Task, TasksCollection, TaskItemView, TaskNormalThumbnail) {
     var View = Backbone.View.extend({
         tagName:"div",
-        className:"tasks_recap",
+        className:"tasks_recap fullheight",
         initialize:function () {
             var base = this;
         },
         init:function (objective) {
             var base = this;
+            base.model = objective;
             base.objective = objective;
+
+            base.objective.on("change", function (model) {
+                base.model = model;
+                base.objective = model;
+                base.render();
+            });
+
             base.render();
             base.registerEvents();
         },
@@ -23,6 +33,13 @@ define([
 
             var template = _.template(tasks_recap_template, {});
             base.$el.html(template);
+
+            var tasks_associated = base.objective.get("tasks").models;
+            for (var k in tasks_associated) {
+                var taskNormalThumbnailView = new TaskNormalThumbnail(tasks_associated[k]);
+                taskNormalThumbnailView.init(false);
+                base.$el.find(".tasks_container").append(taskNormalThumbnailView.$el);
+            }
         },
         registerEvents:function () {
             var base = this;

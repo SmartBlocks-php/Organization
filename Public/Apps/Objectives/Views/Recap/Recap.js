@@ -24,13 +24,13 @@ define([
             var base = this;
             var template = _.template(recap_template, {});
             base.$el.html(template);
+
             var objectives = SmartBlocks.Blocks.Organization.Data.objectives.models;
             for (var k in objectives) {
                 var objView = new ObjectiveItemView();
                 objView.init(objectives[k]);
                 base.$el.find(".objectives_container").append(objView.$el);
             }
-
 
             var tasks = SmartBlocks.Blocks.Organization.Data.tasks.models;
             if (tasks.length > 0) {

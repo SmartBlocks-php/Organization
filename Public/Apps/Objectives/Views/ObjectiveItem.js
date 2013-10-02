@@ -28,8 +28,18 @@ define([
             });
 
             base.$el.droppable({
+                hoverClass:"highlight",
                 drop:function (event, ui) {
-                    console.log("task ID ", ui.draggable.context.attributes.id.value);
+                    var task = SmartBlocks.Blocks.Organization.Data.tasks.get(ui.draggable.context.attributes.id.value);
+                    base.objective.get("tasks").add(task);
+                    base.objective.save({}, {
+                        success:function () {
+                            var str = "Successfully add task \"" + task.get("name") +
+                                "\" to objective \"" + base.objective.get("name") + "\".";
+                            console.log("success", str);
+                            SmartBlocks.basics.show_message("Successfully add task to objective");
+                        }
+                    })
                 }
             });
         },
