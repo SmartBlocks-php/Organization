@@ -24,6 +24,7 @@ define([
             var base = this;
             var template = _.template(recap_template, {});
             base.$el.html(template);
+
             var objectives = SmartBlocks.Blocks.Organization.Data.objectives.models;
             for (var k in objectives) {
                 var objView = new ObjectiveItemView();
@@ -32,10 +33,16 @@ define([
             }
 
             var tasks = SmartBlocks.Blocks.Organization.Data.tasks.models;
-            for (var k in tasks) {
-                var taskNormalThumbnailView = new TaskNormalThumbnail(tasks[k]);
-                taskNormalThumbnailView.init(true);
-                base.$el.find(".tasks_all_box").append(taskNormalThumbnailView.$el);
+            if (tasks.length > 0) {
+                base.$el.find(".tasks_all_box").html();
+                for (var k in tasks) {
+                    var taskNormalThumbnailView = new TaskNormalThumbnail(tasks[k]);
+                    taskNormalThumbnailView.init(true);
+                    base.$el.find(".tasks_all_box").append(taskNormalThumbnailView.$el);
+                }
+            }
+            else {
+                base.$el.find(".tasks_all_box").html("No tasks found.");
             }
         },
         registerEvents:function () {

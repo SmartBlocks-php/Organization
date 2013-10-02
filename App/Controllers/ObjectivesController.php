@@ -97,11 +97,18 @@ class ObjectivesController extends \Controller
 
         $model = Objective::find($params["id"]);
         $data = $this->getRequestData();
-        $model->setName($data["name"]);
-        $model->setManuallyValidated($data["manuallyValidated"]);
+        if (isset($data["name"]))
+        {
+            $model->setName($data["name"]);
+        }
+        if (isset($data["manuallyValidated"]))
+        {
+            $model->setManuallyValidated($data["manuallyValidated"]);
+        }
 
         if (isset($data["tasks"]) && is_array($data["tasks"]))
         {
+            $model->deleteTasks();
             foreach ($data["tasks"] as $datatask)
             {
                 $task = Task::find($datatask["id"]);

@@ -41,12 +41,11 @@
             .tasks_recap_container {
                 display: block;
             }
+            .task_drag_intruction {
+                display: none;
+            }
             .tasks_all_box {
-                padding: 5px;
-                .task_normal_thumbnail {
-                    float: none;
-                    margin: auto;
-                }
+                display: none;
             }
         //            .disabled_message {
         //                display: block;
@@ -63,11 +62,22 @@
             .tasks_recap_container {
                 display: none;
             }
+            .task_drag_intruction {
+                display: block;
+                text-align: center;
+                margin-top: 3px;
+                margin-bottom: -5px;
+            }
             .tasks_all_box {
                 padding: 5px;
+                height: calc(100% - 4px);
+                overflow: overlay;
+
                 .task_normal_thumbnail {
                     float: none;
                     margin: auto;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
                 }
             }
         //            .disabled_message {

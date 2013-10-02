@@ -7,7 +7,8 @@ define([
     var Model = Backbone.Model.extend({
         urlRoot:"/Organization/Objectives",
         defaults:{
-            name:"New Objective"
+            name:"New Objective",
+            tasks: new TasksCollection()
         },
         parse:function (response) {
             var tasks_array = response.tasks;
