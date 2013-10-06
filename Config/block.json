@@ -62,6 +62,7 @@
             "collection_location":"Organization/Apps/Common/Collections/ActivityTypes"
         }
     ],
+    "restricted_to":"user",
     "apps":[
         {
             "name":"Organization",

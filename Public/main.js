@@ -7,17 +7,19 @@ define([
     var main = {
         init: function () {
             var base = this;
-            if (SmartBlocks.Blocks.Notifications) {
-                setInterval(function () {
-                    base.checkReviewTime();
-                }, 1000);
-            }
+            if (SmartBlocks.current_user.connected) {
+                if (SmartBlocks.Blocks.Notifications) {
+                    setInterval(function () {
+                        base.checkReviewTime();
+                    }, 1000);
+                }
 
-            SmartBlocks.Shortcuts.add([
-                101
-            ], function () {
-                base.notifyReviewTime();
-            });
+                SmartBlocks.Shortcuts.add([
+                    101
+                ], function () {
+                    base.notifyReviewTime();
+                });
+            }
         },
         checkReviewTime: function () {
             var base = this;
