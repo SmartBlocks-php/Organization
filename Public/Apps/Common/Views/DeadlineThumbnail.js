@@ -3,8 +3,8 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/deadline_thumbnail.html',
-    '../SubApps/DeadlineClock/DeadlineClock',
-    '../SubApps/DeadlineProgressBar/DeadlineProgressBar',
+    '../Subapps/DeadlineClock/DeadlineClock',
+    '../Subapps/DeadlineProgressBar/DeadlineProgressBar',
     'Organization/Apps/Common/Organization'
 ], function ($, _, Backbone, DeadlineThumbnailTemplate, DeadlineClock, DeadlineProgressBar, Organization) {
     var View = Backbone.View.extend({

@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../../Templates/Timeline/deadline_line.html',
-    'Organization/Apps/Common/SubApps/WorktimeProgressBar/WorktimeProgressBar'
+    'Organization/Apps/Common/Subapps/WorktimeProgressBar/WorktimeProgressBar'
 ], function ($, _, Backbone, deadline_line_tpl, WorktimeProgressBar) {
     var View = Backbone.View.extend({
         tagName: "div",

@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!Organization/Apps/Recap/Templates/timeline.html',
-    'Organization/Apps/Recap/SubApps/Timeline/Timeline',
+    'Organization/Apps/Recap/Subapps/Timeline/Timeline',
     'Organization/Apps/Collections/PlannedTasks'
 ], function ($, _, Backbone, TimelineTemplate, TimelineApp, PlannedTasksCollection) {
     var TimelineView = Backbone.View.extend({

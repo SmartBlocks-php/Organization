@@ -4,8 +4,8 @@ define([
     'backbone',
     'text!../Templates/task_thumbnail.html',
     './DeadlineThumbnail',
-    '../SubApps/DeadlineClock/DeadlineClock',
-    '../SubApps/DeadlineProgressBar/DeadlineProgressBar',
+    '../Subapps/DeadlineClock/DeadlineClock',
+    '../Subapps/DeadlineProgressBar/DeadlineProgressBar',
     './TaskTagItem',
     'ContextMenuView',
     'underscore_string'

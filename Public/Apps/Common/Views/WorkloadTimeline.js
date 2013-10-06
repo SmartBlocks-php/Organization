@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!../Templates/workload_timeline.html',
-    '../SubApps/WorkloadTimeline/WorkloadTimeline'
+    '../Subapps/WorkloadTimeline/WorkloadTimeline'
 ], function ($, _, Backbone, WorkloadTimelineTemplate, WorkloadTimelineApp) {
     var View = Backbone.View.extend({
         tagName: "div",

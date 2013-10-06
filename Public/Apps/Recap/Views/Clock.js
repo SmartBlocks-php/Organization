@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'text!Organization/Apps/Recap/Templates/clock.html',
-    'Organization/Apps/Recap/SubApps/Clock/Clock'
+    'Organization/Apps/Recap/Subapps/Clock/Clock'
 ], function ($, _, Backbone, ClockViewTemplate, ClockApp) {
     var View = Backbone.View.extend({
         tagName: "div",
