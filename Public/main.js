@@ -55,11 +55,11 @@ define([
                 });
             }
         },
-        organization: function () {
+        launch_organization: function (app) {
             var base = this;
-            var view = new OrganizationView();
-            SmartBlocks.Methods.render(view.$el);
-            base.view.init(base.app);
+            base.view = new OrganizationView();
+            SmartBlocks.Methods.render(base.view.$el);
+            base.view.init(app);
         }
     };
 
