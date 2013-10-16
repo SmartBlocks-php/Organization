@@ -7,13 +7,13 @@ define([
     var main = {
         init: function () {
             var base = this;
-            if (SmartBlocks.current_user.connected) {
+
+            if (SmartBlocks.current_user.get("connected")) {
                 if (SmartBlocks.Blocks.Notifications) {
                     setInterval(function () {
                         base.checkReviewTime();
                     }, 1000);
                 }
-
                 SmartBlocks.Shortcuts.add([
                     101
                 ], function () {
